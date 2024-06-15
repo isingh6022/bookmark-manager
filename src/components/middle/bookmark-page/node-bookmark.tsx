@@ -26,7 +26,13 @@ export const Bookmark: React.FC<
   return (
     <a {...{ className, onClick, onContextMenu, id }}>
       <BkmIco url={node.url} />{' '}
-      {state.editing ? <NodeRenameInput {...{ title: node.title, renameBlur }} /> : node.title}
+      {state.editing ? (
+        <NodeRenameInput {...{ title: node.title, renameBlur }} />
+      ) : node.isIcon ? (
+        `(${node.title})`
+      ) : (
+        node.title
+      )}
       {state.ctxMenu ? <BkmCtxMenu {...{ node, position, closeMenu, url, rename }} /> : ''}
     </a>
   );

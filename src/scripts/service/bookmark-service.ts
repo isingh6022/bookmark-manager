@@ -133,7 +133,10 @@ export class BookmarkService extends BaseService {
     IconsCache.rmvIco(payload);
 
     if (node) {
+      let payload: ChangedEvent['payload'] = { changedNodeId: node.id, title: node.title };
+
       node.isIcon = false;
+      this._cache.executeEvent({ type: BkmEventType.CHG, payload }, false, false);
       this.updateStateObject(oldState);
     }
   }

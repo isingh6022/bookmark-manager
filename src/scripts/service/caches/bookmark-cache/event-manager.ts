@@ -78,8 +78,14 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
         return `${event.type}-${mov.movedNodeId}-${mov.parentId}-${mov.index}-${mov.oldParentId}-${mov.oldIndex}`;
       }
       case BkmEventType.CHG: {
-        let chg = (<ChangedEvent>event).payload;
-        return `${event.type}-${chg.changedNodeId}-${chg.title}-${chg.url}`;
+        let chg = (<ChangedEvent>event).payload,
+          node = this.getNode(chg.changedNodeId);
+
+        return node
+          ? `${event.type}-${chg.changedNodeId}-${chg.title || node.title}-${
+              chg.url || node.url || ''
+            }`
+          : '';
       }
       case BkmEventType.ADD: {
         let add = (<CreatedEvent>event).payload;
