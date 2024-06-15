@@ -16,18 +16,18 @@ export function getMiddleThemeCSS(middleColors: ThemeColors['middleColors']): st
         ${getBorderCSS(
           middleColors.rootNodeContainerBorderWidth,
           middleColors.rootNodeContainerBorderColor,
-          'right'
+          'left'
         )}
    }
     #bkmFolder-page-container-id .node-ch-col.node-ch-col-root,
     #search-or-recent-page-container-id .node-ch-col.node-ch-col-root {
         ${'background-color: ${middleColors.rootFolChContainerBgColor}' && ''}
    }
-    #bkmFolder-page-container-id>.node-ch-col:last-child>.folder,
-    #bkmFolder-page-container-id>.node-ch-col:last-child>.bookmark,
-    #search-or-recent-page-container-id>.node-ch-col:last-child>.folder,
-    #search-or-recent-page-container-id>.node-ch-col:last-child>.bookmark {
-        border-right: 0;
+    #bkmFolder-page-container-id>.node-ch-col:first-child>.folder,
+    #bkmFolder-page-container-id>.node-ch-col:first-child>.bookmark,
+    #search-or-recent-page-container-id>.node-ch-col:first-child>.folder,
+    #search-or-recent-page-container-id>.node-ch-col:first-child>.bookmark {
+        border-left: 0;
    }
     #bkmFolder-page-container-id .node-ch-col span.folder, #bkmFolder-page-container-id .node-ch-col div.folder > span,
     #search-or-recent-page-container-id .node-ch-col span.folder, #search-or-recent-page-container-id .node-ch-col div.folder > span {

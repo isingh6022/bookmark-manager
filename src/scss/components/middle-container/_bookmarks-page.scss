@@ -2,6 +2,8 @@
 #search-or-recent-page-container-id {
   padding: $default-content-padding;
   padding-top: 0rem;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
 
   .node-ch-col-root {
     padding-top: 0.6rem;
@@ -13,6 +15,8 @@
   .node-ch-col {
     flex: 1 0 0;
     min-width: 0;
+
+    padding-right: 0.2rem;
 
     display: flex;
     flex-flow: column nowrap;
@@ -75,17 +79,27 @@
     }
   }
 
+  a.bookmark img {
+    width: 1rem;
+    margin: 0 0.2rem 0 0.3rem;
+  }
+
   // Drag and drop
 
   // TO DO: Not working.
   // .dragging {
   //   background-color: #c496c4 !important;
   // }
-  .node-ch-col .folder.dragover.dragover-middle {
+  .node-ch-col span.folder.dragover.dragover-middle {
     border: $dragover-middle-border;
   }
+  .node-ch-col div.folder.dragover.dragover-middle {
+    span {
+      border: $dragover-middle-border;
+    }
+  }
 
-  .node-ch-col .folder,
+  .node-ch-col span.folder,
   .node-ch-col .bookmark {
     &.dragover-top {
       border-top: $dragover-top-border-top;
@@ -95,8 +109,15 @@
     }
   }
 
+  .node-ch-col div.folder.dragover-top span {
+    border-top: $dragover-top-border-top;
+  }
+  .node-ch-col div.folder.dragover-bottom span {
+    border-bottom: $dragover-bottom-border-bottom;
+  }
+
   .node-ch-col.node-ch-col-row-flow {
-    .folder,
+    span.folder,
     .bookmark {
       &.dragover-top {
         border-top: 0;
@@ -111,5 +132,18 @@
         border-right: $dragover-right-border-right;
       }
     }
+  }
+
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-top span {
+    border-top: 0;
+  }
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-bottom span {
+    border-bottom: 1px solid black;
+  }
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-left span {
+    border-left: $dragover-left-border-left;
+  }
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-right span {
+    border-right: $dragover-right-border-right;
   }
 }

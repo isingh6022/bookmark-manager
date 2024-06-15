@@ -53,10 +53,10 @@ export class IconsCache extends BaseCache<IconObj> {
     this._isChanged = false;
     return { [STORE_KEYS.icons]: this._saveData };
   }
-  loadFromSavedData(saveData: IconSaveData): void {
+  loadFromSavedData(saveData: { icons: IconSaveData }): void {
     // Should be used to populate the data.
     let title: string | undefined;
-    this._saveData = saveData;
+    this._saveData = saveData.icons || {};
 
     for (let k in this._saveData) {
       title = this._saveData[k];

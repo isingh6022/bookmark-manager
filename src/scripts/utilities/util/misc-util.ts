@@ -1,7 +1,11 @@
 import { NODE_HEIGHT_REM } from '@proj-const';
 import { BookmarkTreeDataNode } from '@proj-types';
+import { BROWSER } from '../../data/browser/browser-api.js';
 
 export class MiscUtil {
+  static getBrowserIconUrl(url: string): string {
+    return BROWSER.actions.getBkmIconSrc(url);
+  }
   static cloneSerializable<T>(obj: T): T {
     if (!obj || typeof obj !== 'object') return obj;
     if (Array.isArray(obj)) return obj.map((el) => this.cloneSerializable(el)) as any;

@@ -7,7 +7,8 @@ import { ERR_MOVE_WITHIN_SELF } from '@proj-const';
 
 class ChromeActionsAPI implements BrowserActionsAPI {
   getBkmIconSrc(url?: string): string {
-    return url ? 'chrome://favicon/' + url : '';
+    // return url ? 'chrome://favicon/' + url : '';
+    return `chrome-extension://${chrome.runtime.id}/_favicon/?pageUrl=${url}&size=32`;
   }
 
   store(keyValPairs: Partial<STORAGE_DATA_OBJECT>): Promise<void> {

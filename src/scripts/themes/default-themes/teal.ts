@@ -77,7 +77,7 @@ export function getTealTheme() {
       }
     },
     middleColors: {
-      background: PAGE_BG,
+      background: WHITE,
       oddSubFolChContainerBgColor: '#e5f5f3',
       evenSubFolChContainerBgColor: WHITE,
       rootFolChContainerBgColor: WHITE,
