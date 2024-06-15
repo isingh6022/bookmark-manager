@@ -252,10 +252,6 @@ export class BookmarkCache extends EventManager {
       rowDirection
         ? dropInfo.dropZone.lftHlf === DragDropClassCSS.RGT && moveEvent.payload.index++
         : dropInfo.dropZone.topHlf === DragDropClassCSS.BOT && moveEvent.payload.index++;
-
-      moveEvent.payload.parentId === moveEvent.payload.oldParentId &&
-        moveEvent.payload.oldIndex < moveEvent.payload.index &&
-        moveEvent.payload.index--;
     } else if (dropInfo.dropType === DragoverOrDropType.FOL) {
       if (
         (!dropInfo.dropZone.topBot && colDirection) ||
@@ -269,10 +265,6 @@ export class BookmarkCache extends EventManager {
         rowDirection
           ? dropInfo.dropZone.lftRgt === DragDropClassCSS.RGT && moveEvent.payload.index++
           : dropInfo.dropZone.topBot === DragDropClassCSS.BOT && moveEvent.payload.index++;
-
-        moveEvent.payload.parentId === moveEvent.payload.oldParentId &&
-          moveEvent.payload.oldIndex < moveEvent.payload.index &&
-          moveEvent.payload.index--;
       }
     } else if (dropInfo.dropType === DragoverOrDropType.PIN) {
       moveEvent.payload.parentId = dropNode.id;

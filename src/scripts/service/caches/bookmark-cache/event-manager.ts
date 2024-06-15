@@ -57,8 +57,9 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
   protected _popExecutedEvent(): BkmEvent | undefined {
     return this._executedEventStack.pop();
   }
-  protected _pushExecutedEvent(event: BkmEvent, clearUndoStack = false) {
+  protected _pushExecutedEvent(event: BkmEvent, clearUndoStack = false): BkmEvent {
     this._executedEventStack.push(event);
+    return event;
   }
 
   /**
@@ -74,7 +75,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
       }
       case BkmEventType.MOV: {
         let mov = (<MovedEvent>event).payload;
-        return `${event.type}-${mov.movedNodeId}-${mov.parentId}-${mov.index}-${mov.oldIndex}-${mov.oldIndex}`;
+        return `${event.type}-${mov.movedNodeId}-${mov.parentId}-${mov.index}-${mov.oldParentId}-${mov.oldIndex}`;
       }
       case BkmEventType.CHG: {
         let chg = (<ChangedEvent>event).payload;
@@ -101,36 +102,37 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
    * Executes most of the events directly onto the cache and then sends and optimistic
    * update to browser.
    *
-   * @param event
+   * @param eventClone
    * @param executeOptimistically Some events can't be executed directly,
    * like bookmark / folder creation events. Browser has to decide the id first.
    * @param updateFromBrowser Whether the update was sent from the browser.
    */
   executeEvent(event: BkmEvent, executeOptimistically = true, updateFromBrowser = false): void {
     if (executeOptimistically) {
-      let eventExecuted = false;
+      let eventExecuted = false,
+        eventClone = this._cloneEvent(event);
 
-      switch (event.type) {
+      switch (eventClone.type) {
         case BkmEventType.RMV: {
-          let rmvEvent = <RemovedEvent>event;
+          let rmvEvent = <RemovedEvent>eventClone;
           eventExecuted = this._executeRemoveEvent(rmvEvent);
           break;
         }
         case BkmEventType.MOV: {
-          eventExecuted = this._executeMoveEvent(<MovedEvent>event);
+          eventExecuted = this._executeMoveEvent(<MovedEvent>eventClone);
           break;
         }
         case BkmEventType.CHG: {
-          let changeEvent = <ChangedEvent>event;
+          let changeEvent = <ChangedEvent>eventClone;
           eventExecuted = this._executeEditEvent(changeEvent);
           break;
         }
         case BkmEventType.ADD: {
-          eventExecuted = this._executeCreateEvent(<CreatedEvent>event);
+          eventExecuted = this._executeCreateEvent(<CreatedEvent>eventClone);
           break;
         }
         case BkmEventType.ORD: {
-          eventExecuted = this._executeChReorderedEvent(<ChReordered>event);
+          eventExecuted = this._executeChReorderedEvent(<ChReordered>eventClone);
           break;
         }
         case BkmEventType.IMP: {
@@ -139,15 +141,19 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
       }
 
       if (eventExecuted) {
-        this._pushExecutedEvent(event);
-        this._afterBrowserEvent(event);
+        this._afterBrowserEvent(this._pushExecutedEvent(this._cloneEvent(event)));
       }
     }
 
     if (!updateFromBrowser) {
       this._dispatchBrowserEvent(event);
       this._dispatchedEventsSet.add(this._getBrowserEventSignature(event));
+    } else {
+      this._onBrowserUpdate();
     }
+  }
+  private _cloneEvent(event: BkmEvent): BkmEvent {
+    return { type: event.type, payload: { ...(<any>event.payload || null) } };
   }
   protected abstract _afterBrowserEvent(event: BkmEvent): void;
   protected abstract _dispatchBrowserEvent(event: BkmEvent): void;
@@ -159,12 +165,26 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
    * @param event The event object generated from the event data received from browser.
    */
   protected _executeEventFromBrowser(event: BkmEvent) {
+    if (event.type === BkmEventType.MOV) {
+      // Behavior observed in chrome...
+      let movEvent = <MovedEvent>event;
+      if (
+        movEvent.payload.oldParentId === movEvent.payload.parentId &&
+        movEvent.payload.index > movEvent.payload.oldIndex
+      ) {
+        typeof movEvent.payload.index === 'number' && movEvent.payload.index++;
+      }
+    }
     let signature = this._getBrowserEventSignature(event),
       executeOptimistically = !this._dispatchedEventsSet.has(signature);
 
-    !executeOptimistically && this._dispatchedEventsSet.delete(signature);
+    this._dispatchedEventsSet.delete(signature);
 
     this.executeEvent(event, executeOptimistically, true);
+  }
+  private _onBrowserUpdate: Function = () => {};
+  onBrowserUpdate(cb: Function) {
+    this._onBrowserUpdate = cb;
   }
 
   private _executeRemoveEvent(event: RemovedEvent): boolean {
@@ -181,6 +201,10 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     let newParent = this.getNode(event.payload.parentId),
       oldParent = this.getNode(event.payload.oldParentId),
       newParentParentChain = this.getParentChain(event.payload.parentId);
+
+    event.payload.parentId === event.payload.oldParentId &&
+      event.payload.oldIndex < event.payload.index &&
+      event.payload.index--;
 
     if (
       newParent &&

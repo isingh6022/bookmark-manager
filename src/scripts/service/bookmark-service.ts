@@ -60,6 +60,10 @@ export class BookmarkService extends BaseService {
     targetState.currNodeParentChain = sourceState.currNodeParentChain;
   }
 
+  onBrowserUpdate(cb: Function) {
+    this._cache.onBrowserUpdate(cb);
+  }
+
   setCurrentNode(oldState: BookmarkSliceState, id?: string): void {
     let node = (this._cache.getNode(id) || this._cache.defaultNode).dataTree,
       oldNodeId = oldState.currNode.id;

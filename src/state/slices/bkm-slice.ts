@@ -13,6 +13,9 @@ const bookmarkSlice = createSlice({
     bookmarkDataInit: (state, action: PayloadAction<string | undefined>) => {
       BookmarkService.instance.setCurrentNode(state, action.payload);
     },
+    refreshBkmState: (state, action: PayloadAction<void>) => {
+      BookmarkService.instance.updateStateObject(state);
+    },
 
     rmv: (state, action: PayloadAction<string>) => {
       BookmarkService.instance.rmv(state, action.payload);
@@ -80,7 +83,7 @@ export const bookmarkReducer = bookmarkSlice.reducer;
 
 // prettier-ignore
 export const {
-  bookmarkDataInit, setCurrNode,
+  bookmarkDataInit, refreshBkmState, setCurrNode,
   rmv, mov, add, chg, ord, imp,
   ico, rmvIco, showNode,
   selectDeselectNode, deselectAll,

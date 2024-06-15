@@ -88,6 +88,8 @@ export class BookmarksDAO extends BaseSingleton implements StorageDAO<BrowserBkm
       }
       case BkmEventType.MOV: {
         let { movedNodeId, ...payload } = (<MovedEvent>event).payload;
+        delete (<any>payload).oldIndex;
+        delete (<any>payload).oldParentId;
         return BROWSER.actions.moveBk(movedNodeId, payload);
       }
       case BkmEventType.CHG: {
