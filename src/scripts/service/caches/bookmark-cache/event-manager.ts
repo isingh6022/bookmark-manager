@@ -15,7 +15,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
   // @ts-ignore
   // Initialization error - Ignored to use helper method for initialization in constructor.
   protected _rootNode: BookmarkTreeNode;
-  protected map = new Map<string, BookmarkTreeNode>();
+  protected _map = new Map<string, BookmarkTreeNode>();
 
   private _executedEventStack: BkmEvent[] = [];
 
@@ -32,8 +32,8 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     if (this.getNode(this._rootNode.parentId)) {
       throw 'Somehow found the parent of root node.';
     }
-    this.map.clear();
-    this._getAllNodeInTree(this._rootNode).forEach((node) => this.map.set(node.id, node));
+    this._map.clear();
+    this._getAllNodeInTree(this._rootNode).forEach((node) => this._map.set(node.id, node));
   }
   abstract getParentChain(id: string): BookmarkTreeNode[];
 
@@ -48,10 +48,10 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
   }
 
   getNode(id?: string): BookmarkTreeNode | undefined {
-    return id ? this.map.get(id) : undefined;
+    return id ? this._map.get(id) : undefined;
   }
   hasNode(id: string): boolean {
-    return this.map.has(id);
+    return this._map.has(id);
   }
 
   protected _popExecutedEvent(): BkmEvent | undefined {
@@ -89,7 +89,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
       }
       case BkmEventType.ADD: {
         let add = (<CreatedEvent>event).payload;
-        return `${event.type}-${add.parentId}-${add.title}-${add.url}-${add.index}`;
+        return `${event.type}-${add.parentId}-${add.title || ''}-${add.url || ''}-${add.index}`;
       }
       case BkmEventType.ORD: {
         let ord = (<ChReordered>event).payload;
@@ -153,7 +153,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
 
     if (!updateFromBrowser) {
       this._dispatchBrowserEvent(event);
-      this._dispatchedEventsSet.add(this._getBrowserEventSignature(event));
+      executeOptimistically && this._dispatchedEventsSet.add(this._getBrowserEventSignature(event));
     } else {
       this._onBrowserUpdate();
     }
@@ -241,6 +241,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
       parent = this.getNode(event.payload.parentId);
 
     if (parent) {
+      this._map.set(newNode.id, newNode);
       parent.childNodes.add(newNode, newNode.index);
       return true;
     }

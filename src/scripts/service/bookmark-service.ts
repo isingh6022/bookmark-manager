@@ -93,7 +93,7 @@ export class BookmarkService extends BaseService {
     this.updateStateObject(oldState, oldState.searchData?.query || '');
   }
   add(oldState: BookmarkSliceState, payload: CreatedEvent['payload']): void {
-    this._cache.executeEvent({ type: BkmEventType.ADD, payload });
+    this._cache.executeEvent({ type: BkmEventType.ADD, payload }, false, false);
     this.updateStateObject(oldState, oldState.searchData?.query || '');
   }
   chg(oldState: BookmarkSliceState, payload: ChangedEvent['payload']): void {

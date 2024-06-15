@@ -97,6 +97,9 @@ export class BookmarksDAO extends BaseSingleton implements StorageDAO<BrowserBkm
         return BROWSER.actions.update(changedNodeId, payload);
       }
       case BkmEventType.ADD: {
+        if (event.payload) {
+          delete (<any>(<CreatedEvent>event).payload).id;
+        }
         return BROWSER.actions.createNode((<CreatedEvent>event).payload);
       }
       case BkmEventType.ORD: {
