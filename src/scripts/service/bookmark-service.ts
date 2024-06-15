@@ -119,7 +119,7 @@ export class BookmarkService extends BaseService {
     let node = BookmarkCache.getNode(payload);
     if (node) {
       let title = node.title || '',
-        payload: ChangedEvent['payload'] = { changedNodeId: node.id, title };
+        payload: ChangedEvent['payload'] = { changedNodeId: node.id, title: '' };
 
       IconsCache.addIco(node.id, title);
       node.isIcon = true;

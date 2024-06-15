@@ -4,6 +4,7 @@
   .address-bar-icon-container {
     // NOTE: flex: 0 0 overwrites flex-basis in layout.
     flex: 0 0;
+    align-items: stretch;
     font-size: $top-bar-btn-size;
     cursor: pointer;
 

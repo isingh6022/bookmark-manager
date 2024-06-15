@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { ComponentRefCSS, SHIFT_DRAG_EL } from '@proj-const';
+import { ComponentRefCSS, GenericClassCSS, SHIFT_DRAG_EL } from '@proj-const';
 import { BookmarkTreeDataNode, DragNodeData, DragstartType, NodeType } from '@proj-types';
 import { Util } from '@proj-scripts';
 import { ReduxSelectorForArrOfElements, RootStateType } from '@proj-state';
@@ -43,13 +43,17 @@ export const DragDrop: React.FC<any> = () => {
 
   if (!dragging) return <></>;
 
+  const selectedNodes = Util.misc.getSelectedVisibleNodes(currNode);
   const onlyEl = (
     <>
-      {dragstartNode?.type === NodeType.BKM ? <BkmIco url={'random url'} /> : <BsFolder />}
+      {dragstartNode?.type === NodeType.BKM ? (
+        <BkmIco url={selectedNodes[0]?.url || ''} />
+      ) : (
+        <BsFolder />
+      )}
       {dragstartNode?.title}
     </>
   );
-  const selectedNodes = Util.misc.getSelectedVisibleNodes(currNode);
   let folCount = 0,
     bkmCount = 0;
   selectedNodes.forEach((node) => (node.type === NodeType.FOL ? folCount++ : bkmCount++));
@@ -57,7 +61,10 @@ export const DragDrop: React.FC<any> = () => {
   return (
     <div
       id={ComponentRefCSS.DRG_DRP_ELEM_ID}
-      className={dragstartType === DragstartType.PIN ? 'drag-pin' : ''}
+      className={Util.misc.mergeClassNames(
+        dragstartType === DragstartType.PIN ? 'drag-pin' : '',
+        GenericClassCSS.FLEX_ROW_CENTER_NOWRAP
+      )}
       ref={ref}
     >
       {selectedNodes.length === 1 || dragstartType === DragstartType.PIN ? (

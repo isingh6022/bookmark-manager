@@ -3,7 +3,14 @@ div#drag-drop-element {
   pointer-events: none;
 
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 0.3rem 1rem;
+  padding: 0.3rem 0.5rem;
   border: 1px solid black;
   border-radius: 2rem;
+
+  height: $node-height;
+
+  img {
+    width: 1rem;
+    margin: 0 0.2rem 0 0;
+  }
 }
