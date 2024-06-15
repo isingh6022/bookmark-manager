@@ -21,6 +21,8 @@ interface BookmarkTreeDataNode {
   index: number;
   children: BookmarkTreeDataNode[];
   selected: boolean;
+
+  isIcon: boolean;
 }
 
 /**
@@ -37,6 +39,7 @@ interface BookmarkTreeNode extends BrowserBkmNode {
 
   readonly title: string;
   /**
+   * This property is useful for search.
    * Once the icons are loaded, this param is updated and then is always
    * maintained within the node. So, search does not require a separate
    * instance of icons manager.
@@ -68,6 +71,8 @@ interface BookmarkTreeNode extends BrowserBkmNode {
   setIndex(i: number): void;
 
   selected: boolean;
+
+  isIcon: boolean;
 }
 
 interface BookmarkChildren {

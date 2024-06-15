@@ -4,7 +4,8 @@ import {
 
   BkmEvent,
   ChReordered, ChangedEvent, CreatedEvent,
-  MovedEvent, RemovedEvent, BookmarkSliceState
+  MovedEvent, RemovedEvent, BookmarkSliceState,
+  BkmEventType
 } from '@proj-types';
 
 import { BookmarkTreeNodeFactory } from './bkm-node-impl.js';
@@ -60,7 +61,113 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     this._executedEventStack.push(event);
   }
 
-  protected _executeRemoveEvent(event: RemovedEvent): boolean {
+  /**
+   * Maintained to track which events were sent to browser after optimistic updates and
+   * which ones are sent from the browser itself.
+   */
+  private _dispatchedEventsSet = new Set<string>();
+  private _getBrowserEventSignature(event: BkmEvent): string {
+    switch (event.type) {
+      case BkmEventType.RMV: {
+        let rmv = (<RemovedEvent>event).payload;
+        return `${event.type}-${rmv.node.id}`;
+      }
+      case BkmEventType.MOV: {
+        let mov = (<MovedEvent>event).payload;
+        return `${event.type}-${mov.movedNodeId}-${mov.parentId}-${mov.index}-${mov.oldIndex}-${mov.oldIndex}`;
+      }
+      case BkmEventType.CHG: {
+        let chg = (<ChangedEvent>event).payload;
+        return `${event.type}-${chg.changedNodeId}-${chg.title}-${chg.url}`;
+      }
+      case BkmEventType.ADD: {
+        let add = (<CreatedEvent>event).payload;
+        return `${event.type}-${add.parentId}-${add.title}-${add.url}-${add.index}`;
+      }
+      case BkmEventType.ORD: {
+        let ord = (<ChReordered>event).payload;
+        return `${event.type}-${ord.targetParentNodeId}`;
+      }
+      case BkmEventType.IMP: {
+        return `${event.type}-`;
+      }
+      default: {
+        return '';
+      }
+    }
+  }
+
+  /**
+   * Executes most of the events directly onto the cache and then sends and optimistic
+   * update to browser.
+   *
+   * @param event
+   * @param executeOptimistically Some events can't be executed directly,
+   * like bookmark / folder creation events. Browser has to decide the id first.
+   * @param updateFromBrowser Whether the update was sent from the browser.
+   */
+  executeEvent(event: BkmEvent, executeOptimistically = true, updateFromBrowser = false): void {
+    if (executeOptimistically) {
+      let eventExecuted = false;
+
+      switch (event.type) {
+        case BkmEventType.RMV: {
+          let rmvEvent = <RemovedEvent>event;
+          eventExecuted = this._executeRemoveEvent(rmvEvent);
+          break;
+        }
+        case BkmEventType.MOV: {
+          eventExecuted = this._executeMoveEvent(<MovedEvent>event);
+          break;
+        }
+        case BkmEventType.CHG: {
+          let changeEvent = <ChangedEvent>event;
+          eventExecuted = this._executeEditEvent(changeEvent);
+          break;
+        }
+        case BkmEventType.ADD: {
+          eventExecuted = this._executeCreateEvent(<CreatedEvent>event);
+          break;
+        }
+        case BkmEventType.ORD: {
+          eventExecuted = this._executeChReorderedEvent(<ChReordered>event);
+          break;
+        }
+        case BkmEventType.IMP: {
+          break;
+        }
+      }
+
+      if (eventExecuted) {
+        this._pushExecutedEvent(event);
+        this._afterBrowserEvent(event);
+      }
+    }
+
+    if (!updateFromBrowser) {
+      this._dispatchBrowserEvent(event);
+      this._dispatchedEventsSet.add(this._getBrowserEventSignature(event));
+    }
+  }
+  protected abstract _afterBrowserEvent(event: BkmEvent): void;
+  protected abstract _dispatchBrowserEvent(event: BkmEvent): void;
+
+  /**
+   * It may be noted that the order of the events is crucial. Thus its assumed that
+   * the behavior is analogus to how synchronous code would behave.
+   *
+   * @param event The event object generated from the event data received from browser.
+   */
+  protected _executeEventFromBrowser(event: BkmEvent) {
+    let signature = this._getBrowserEventSignature(event),
+      executeOptimistically = !this._dispatchedEventsSet.has(signature);
+
+    !executeOptimistically && this._dispatchedEventsSet.delete(signature);
+
+    this.executeEvent(event, executeOptimistically, true);
+  }
+
+  private _executeRemoveEvent(event: RemovedEvent): boolean {
     let parent = this.getNode(event.payload.parentId);
 
     if (parent) {
@@ -70,7 +177,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     return false;
   }
 
-  protected _executeMoveEvent(event: MovedEvent): boolean {
+  private _executeMoveEvent(event: MovedEvent): boolean {
     let newParent = this.getNode(event.payload.parentId),
       oldParent = this.getNode(event.payload.oldParentId),
       newParentParentChain = this.getParentChain(event.payload.parentId);
@@ -89,7 +196,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     return false;
   }
 
-  protected _executeEditEvent(event: ChangedEvent): boolean {
+  private _executeEditEvent(event: ChangedEvent): boolean {
     let node = this.getNode(event.payload.changedNodeId);
     if (node) {
       event.payload.oldInfo = { title: node.title, url: node.url };
@@ -99,7 +206,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     return false;
   }
 
-  protected _executeCreateEvent(event: CreatedEvent): boolean {
+  private _executeCreateEvent(event: CreatedEvent): boolean {
     let newNode = BookmarkTreeNodeFactory(event.payload),
       parent = this.getNode(event.payload.parentId);
 
@@ -110,7 +217,7 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     return false;
   }
 
-  protected _executeChReorderedEvent(event: ChReordered): boolean {
+  private _executeChReorderedEvent(event: ChReordered): boolean {
     let node = this.getNode(event.payload.targetParentNodeId);
 
     if (node) {

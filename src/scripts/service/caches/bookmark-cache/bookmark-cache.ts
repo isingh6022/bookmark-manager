@@ -61,8 +61,13 @@ export class BookmarkCache extends EventManager {
     let node: BookmarkTreeNode | undefined, title: string | undefined;
 
     for (let id in iconData) {
-      (node = this.getNode(id)), (title = iconData[id]?.title);
-      title && node && node.updateTitleLower(title);
+      node = this.getNode(id);
+      title = iconData[id]?.title;
+
+      if (node && title) {
+        node.edit({ title });
+        node.isIcon = true;
+      }
     }
   }
 
@@ -135,69 +140,15 @@ export class BookmarkCache extends EventManager {
     return this.getRootNode().children.map((node) => node.dataTree);
   }
 
-  /**
-   * Executes most of the events directly onto the cache and then sends and optimistic
-   * update to browser.
-   *
-   * @param event
-   * @param executeOptimistically Some events can't be executed directly,
-   * like bookmark / folder creation events. Browser has to decide the id first.
-   * @param updateFromBrowser Whether the update was sent from the browser.
-   */
-  executeEvent(event: BkmEvent, executeOptimistically = true, updateFromBrowser = false): void {
-    if (executeOptimistically) {
-      let eventExecuted = false;
-
-      switch (event.type) {
-        case BkmEventType.RMV: {
-          let rmvEvent = <RemovedEvent>event;
-          eventExecuted = this._executeRemoveEvent(rmvEvent);
-          break;
-        }
-        case BkmEventType.MOV: {
-          eventExecuted = this._executeMoveEvent(<MovedEvent>event);
-          break;
-        }
-        case BkmEventType.CHG: {
-          let changeEvent = <ChangedEvent>event;
-          eventExecuted = this._executeEditEvent(changeEvent);
-          break;
-        }
-        case BkmEventType.ADD: {
-          eventExecuted = this._executeCreateEvent(<CreatedEvent>event);
-          break;
-        }
-        case BkmEventType.ORD: {
-          eventExecuted = this._executeChReorderedEvent(<ChReordered>event);
-          break;
-        }
-        case BkmEventType.IMP: {
-          break;
-        }
-      }
-
-      if (eventExecuted) {
-        this._pushExecutedEvent(event);
-        this.deSelectAll();
-        BookmarksDAO.instance.dispatchBrowserEvent(event);
-      }
-    } else if (!updateFromBrowser) {
-      BookmarksDAO.instance.dispatchBrowserEvent(event);
-    } else if (event.type === BkmEventType.ADD) {
-      let addEvent = <CreatedEvent>event;
-      this._executeCreateEvent(addEvent);
-      this._dispatchRefreshOnBrowserEvent();
-    }
+  protected _afterBrowserEvent(event: BkmEvent): void {
+    this.deSelectAll();
   }
-  private _dispatchRefreshOnBrowserEvent: Function = () => {};
-  dispatchRefreshOnBrowserEvent(cb: Function): void {
-    this._dispatchRefreshOnBrowserEvent = cb;
+  protected _dispatchBrowserEvent(event: BkmEvent) {
+    BookmarksDAO.instance.dispatchBrowserEvent(event);
   }
+  protected _addListenserForBrowserEvents() {
+    let eventHandler = (event: BkmEvent) => this._executeEventFromBrowser(event);
 
-  private _addListenserForBrowserEvents() {
-    let eventHandler = (event: BkmEvent) => {
-      this.executeEvent(event, false, true);
-    };
     BookmarksDAO.instance.listenBrowserEvents({
       rmv: eventHandler,
       mov: eventHandler,

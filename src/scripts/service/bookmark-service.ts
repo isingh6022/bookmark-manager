@@ -89,7 +89,7 @@ export class BookmarkService extends BaseService {
     this.updateStateObject(oldState, oldState.searchData?.query || '');
   }
   add(oldState: BookmarkSliceState, payload: CreatedEvent['payload']): void {
-    this._cache.executeEvent({ type: BkmEventType.ADD, payload }, false);
+    this._cache.executeEvent({ type: BkmEventType.ADD, payload });
     this.updateStateObject(oldState, oldState.searchData?.query || '');
   }
   chg(oldState: BookmarkSliceState, payload: ChangedEvent['payload']): void {
@@ -114,18 +114,24 @@ export class BookmarkService extends BaseService {
   ico(oldState: BookmarkSliceState, payload: string): void {
     let node = BookmarkCache.getNode(payload);
     if (node) {
-      let title = node.title || '';
+      let title = node.title || '',
+        payload: ChangedEvent['payload'] = { changedNodeId: node.id, title };
 
       IconsCache.addIco(node.id, title);
-      node.edit({ title: '' });
-      node.updateTitleLower(title);
+      node.isIcon = true;
 
-      this.updateStateObject(oldState, oldState.searchData?.query || '');
+      this._cache.executeEvent({ type: BkmEventType.CHG, payload }, false, false);
+      this.updateStateObject(oldState);
     }
   }
+  rmvIco(oldState: BookmarkSliceState, payload: string): void {
+    let node = BookmarkCache.getNode(payload);
+    IconsCache.rmvIco(payload);
 
-  dispatchRefreshOnBrowserEvent(cb: Function): void {
-    this._cache.dispatchRefreshOnBrowserEvent(cb);
+    if (node) {
+      node.isIcon = false;
+      this.updateStateObject(oldState);
+    }
   }
 
   showNode(oldState: BookmarkSliceState, id: string, showInParent?: boolean): void {
@@ -229,9 +235,5 @@ export class BookmarkService extends BaseService {
 
   searchNodes(state: BookmarkSliceState, query: string) {
     this.updateStateObject(state, query);
-  }
-
-  refreshOnBrowserEvent(state: BookmarkSliceState) {
-    this.updateStateObject(state, state.searchData?.query || '');
   }
 }

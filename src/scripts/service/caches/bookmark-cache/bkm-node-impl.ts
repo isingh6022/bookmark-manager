@@ -109,6 +109,8 @@ abstract class BkmTreeNodeInitializer {
       children  : [],
 
       selected  : false,
+
+      isIcon: false
     }
 
     this._title_lower = browserBkmNode.title.toLowerCase();
@@ -200,6 +202,13 @@ class BkmTreeNodeImpl extends BkmTreeNodeInitializer implements BookmarkTreeNode
   }
   public set selected(value: boolean) {
     this._updateDataTree({ selected: value });
+  }
+
+  public get isIcon(): boolean {
+    return this.dataTree.isIcon;
+  }
+  public set isIcon(isIco: boolean) {
+    this._updateDataTree({isIcon: isIco});
   }
 }
 

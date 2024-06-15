@@ -32,6 +32,11 @@
       &.node-selected {
         background-color: #a5f4ff;
       }
+
+      input {
+        max-width: calc(100% - 1.9rem);
+        min-width: calc(100% - 1.9rem);
+      }
     }
 
     & > span {

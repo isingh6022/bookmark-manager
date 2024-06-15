@@ -83,6 +83,7 @@ THEME_CONST.permanentThemeIds.add(THEME_CONST.blankTheme.id);
 THEME_CONST.permanentThemeIds.add(THEME_CONST.classicYellow.id);
 THEME_CONST.permanentThemeIds.add(THEME_CONST.islandBeach.id);
 THEME_CONST.permanentThemeIds.add(THEME_CONST.teal.id);
+THEME_CONST.permanentThemeIds.add(THEME_CONST.dark.id);
 
 export {
   MIN_NODES_PER_ROW,

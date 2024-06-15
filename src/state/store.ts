@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { BookmarkService, SettingsService } from '@proj-scripts';
-import { bookmarkDataInit, refreshOnBrowserEvent, setCurrNode } from './slices/bkm-slice.js';
+import { bookmarkDataInit, setCurrNode } from './slices/bkm-slice.js';
 import { settingsDataInit } from './slices/settings-slice.js';
 import {
   bookmarkReducer as bookmarks,
@@ -35,10 +35,6 @@ SettingsService.instance.afterInit(() => {
     afterSettInit();
   }
 });
-
-BookmarkService.instance.dispatchRefreshOnBrowserEvent(() =>
-  STORE.dispatch(refreshOnBrowserEvent())
-);
 
 export type RootStateType = ReturnType<typeof STORE.getState>;
 export type AppDispatchType = typeof STORE.dispatch;

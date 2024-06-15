@@ -29,6 +29,7 @@ enum BkmCtxMenuOptions {
   OPEN_NEW_TAB = 'Open in New Tab',
   EDIT = 'Edit',
   CPY_TO_FOL = 'Copy to Folder',
+  SHW_FUL_NAM_OF_ICO = 'Show full name',
   ICN_ONLY_TOP_BAR = 'Icon Only in Top Bar'
 }
 

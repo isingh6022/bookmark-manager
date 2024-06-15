@@ -33,8 +33,12 @@ const bookmarkSlice = createSlice({
       // BookmarkService.instance.imp(state, action.payload);
       return;
     },
-    ico(state, action: PayloadAction<string>) {
+
+    ico: (state, action: PayloadAction<string>) => {
       BookmarkService.instance.ico(state, action.payload);
+    },
+    rmvIco: (state, action: PayloadAction<string>) => {
+      BookmarkService.instance.rmvIco(state, action.payload);
     },
 
     showNode(state, action: PayloadAction<{ id: string; showInParent?: boolean }>) {
@@ -68,9 +72,6 @@ const bookmarkSlice = createSlice({
 
     searchNodes(state, action: PayloadAction<string>) {
       BookmarkService.instance.searchNodes(state, action.payload);
-    },
-    refreshOnBrowserEvent(state, action: PayloadAction<void>) {
-      BookmarkService.instance.refreshOnBrowserEvent(state);
     }
   }
 });
@@ -81,9 +82,8 @@ export const bookmarkReducer = bookmarkSlice.reducer;
 export const {
   bookmarkDataInit, setCurrNode,
   rmv, mov, add, chg, ord, imp,
-  ico, showNode,
+  ico, rmvIco, showNode,
   selectDeselectNode, deselectAll,
   dropOver,
-  searchNodes,
-  refreshOnBrowserEvent
+  searchNodes
 } = bookmarkSlice.actions;

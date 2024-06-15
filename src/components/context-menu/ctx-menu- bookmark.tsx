@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { CtxMenuOption, BkmCtxMenuProps, Popup, PropertiesPopup, PAGES } from '@proj-types';
-import { AppDispatchType, rmv, popup, ico, showNode, setCurrNode, page } from '@proj-state';
+import { AppDispatchType, rmv, popup, ico, showNode, setCurrNode, page, rmvIco } from '@proj-state';
 import { CommonCtxMenuOptions, BkmCtxMenuOptions } from '@proj-const';
 import { CtxMenu } from './context-menu.js';
 
@@ -8,6 +8,7 @@ type ReduxEvent =
   | ReturnType<typeof rmv>
   | ReturnType<typeof popup>
   | ReturnType<typeof ico>
+  | ReturnType<typeof rmvIco>
   | ReturnType<typeof setCurrNode>
   | ReturnType<typeof page>
   | ReturnType<typeof showNode>;
@@ -59,7 +60,9 @@ export const BkmCtxMenu: React.FC<BkmCtxMenuProps> = ({
   // );
 
   // icon only in top bar
-  addOption(BkmCtxMenuOptions.ICN_ONLY_TOP_BAR, ico(node.id));
+  node.isIcon
+    ? addOption(BkmCtxMenuOptions.SHW_FUL_NAM_OF_ICO, rmvIco(node.id))
+    : addOption(BkmCtxMenuOptions.ICN_ONLY_TOP_BAR, ico(node.id));
 
   // different name in bookmark bar: TO_DO
   // addOption(CommonCtxMenuOptions.DIFF_NAME_BKM_BAR, CommonCtxMenuOptions.DIFF_NAME_BKM_BAR);

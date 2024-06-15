@@ -1,7 +1,7 @@
 export {
     bookmarkDataInit, setCurrNode,
     rmv, mov, add, chg, ord, imp,
-    ico, showNode,
+    ico, rmvIco, showNode,
     selectDeselectNode, deselectAll,
     dropOver,
     searchNodes

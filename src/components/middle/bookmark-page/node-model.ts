@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { MinorElementsRefCSS } from '@proj-const';
-import { AppDispatchType, selectDeselectNode, deselectAll, chg } from '@proj-state';
+import { AppDispatchType, selectDeselectNode, deselectAll, chg, rmvIco } from '@proj-state';
 import { BookmarkComponentStateMachine, FolderComponentStateMachine, Util } from '@proj-scripts';
 import {
   BookmarkTreeDataNode,
@@ -90,6 +90,9 @@ export class NodeModel {
     this._handleNodeStateEvent(NodeCommonStateEvents.CTX_MENU_CLOSE);
   }
   rename() {
+    if (this._node.isIcon) {
+      this._dispatch(rmvIco(this._node.id));
+    }
     this._handleNodeStateEvent(NodeCommonStateEvents.CTX_MENU_RENAME);
   }
   renameBlur(newTitle: string) {
