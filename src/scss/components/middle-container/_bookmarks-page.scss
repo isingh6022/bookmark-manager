@@ -21,6 +21,14 @@
     display: flex;
     flex-flow: column nowrap;
 
+    // Selection
+    .bookmark.node-selected,
+    span.folder.node-selected,
+    div.folder.node-selected > span {
+      background-color: #72c8d3 !important; // fallback.
+      background-color: #72c8d363 !important;
+    }
+
     .folder,
     .bookmark {
       text-decoration: none;
@@ -28,11 +36,6 @@
       transition:
         opacity $duration-1 $curve-quick-initially,
         border $duration-1;
-
-      // Selection
-      &.node-selected {
-        background-color: #9cd9e2 !important;
-      }
 
       input {
         max-width: calc(100% - 1.9rem);
