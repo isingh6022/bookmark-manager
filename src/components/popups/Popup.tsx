@@ -14,7 +14,8 @@ import {
   ConfirmPopup,
   SettingsPopup,
   NewFolderPopup,
-  ThemePopup
+  ThemePopup,
+  DeleteFolderPopup
 } from '@proj-types';
 import { GenericClassCSS, LayoutRefCSS, PopupElementsRefCSS } from '@proj-const';
 import { Layer } from '../layout/layer.js';
@@ -28,6 +29,7 @@ import { PropertiesPopupComponent } from './properties-popup.js';
 import { NewFolderPopupComponent } from './new-folder-popup.js';
 import { ThemePopupComponent } from './theme-popup.js';
 import { BsXSquare } from '../project-icons.js';
+import { DeleteFolderPopupComponent } from './delete-folder-popup.js';
 
 const defaultPopupTitles: { [key in Popup]: string } = {
   [Popup.INFO]: 'Info',
@@ -38,6 +40,7 @@ const defaultPopupTitles: { [key in Popup]: string } = {
   [Popup.SETTINGS]: 'Settings',
   [Popup.PROPERTIES]: 'Properties',
   [Popup.NEW_FOL]: 'New Folder',
+  [Popup.DEL_FOL]: 'Delete A Folder',
   [Popup.THEME]: 'Themes'
 };
 
@@ -51,6 +54,7 @@ const popupIdMap: { [key in Popup]: string } = {
   [Popup.SETTINGS]: PopupElementsRefCSS.SETTING_CONT_ID,
   [Popup.PROPERTIES]: PopupElementsRefCSS.PROPERS_CONT_ID,
   [Popup.NEW_FOL]:   PopupElementsRefCSS.NEW_FOL_CONT_ID,
+  [Popup.DEL_FOL]: PopupElementsRefCSS.DEL_FOL_ID,
   [Popup.THEME]: PopupElementsRefCSS.THEME_CONT_ID
 };
 
@@ -79,6 +83,9 @@ const PopupContent: React.FC<{ popup: PopupConfig }> = ({ popup }) => {
     }
     case Popup.NEW_FOL: {
       return <NewFolderPopupComponent {...(popup as NewFolderPopup)} />;
+    }
+    case Popup.DEL_FOL: {
+      return <DeleteFolderPopupComponent {...(popup as DeleteFolderPopup)} />;
     }
     case Popup.THEME: {
       return <ThemePopupComponent {...(popup as ThemePopup)} />;

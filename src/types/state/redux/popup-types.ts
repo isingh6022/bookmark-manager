@@ -1,7 +1,7 @@
 import { BookmarkTreeDataNode } from '../../data/node.js';
 
 // prettier-ignore
-enum Popup { INFO, ERROR, WARN, SUCCESS, CONFIRM, SETTINGS, PROPERTIES, NEW_FOL, THEME }
+enum Popup { INFO, ERROR, WARN, SUCCESS, CONFIRM, SETTINGS, PROPERTIES, NEW_FOL, THEME, DEL_FOL }
 
 interface PopupConfig {
   type: Popup;
@@ -50,11 +50,18 @@ interface NewFolderPopup extends PopupConfig {
 interface ThemePopup extends PopupConfig {
   type: Popup.THEME;
 }
+interface DeleteFolderPopup extends PopupConfig {
+  type: Popup.DEL_FOL;
+  nodeId: string;
+  node: BookmarkTreeDataNode;
+  parentChain: BookmarkTreeDataNode[];
+  folderStats: { nFol: number; nBkm: number };
+}
 
 // prettier-ignore
 export { 
   Popup, PopupConfig,
   InfoPopup, ErrorPopup, WarnPopup, SuccessPopup,
   ConfirmPopup, SettingsPopup, PropertiesPopup,
-  NewFolderPopup, ThemePopup
+  NewFolderPopup, ThemePopup, DeleteFolderPopup
 };

@@ -86,7 +86,7 @@ export const BkmCtxMenu: React.FC<BkmCtxMenuProps> = ({
       type: Popup.PROPERTIES,
       title: '', // Determined by popup.
       message: '',
-      width: 400,
+      width: 450,
       closeOnOutsideClick: true,
       nodeId: node.id
     } as PropertiesPopup)

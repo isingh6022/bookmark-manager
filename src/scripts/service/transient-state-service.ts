@@ -7,7 +7,8 @@ import {
   DropInfo, DragstartInfo, Popup, ConfirmPopup,
   NewFolderPopup,
   PropertiesPopup,
-  NodeType
+  NodeType,
+  DeleteFolderPopup
 } from '@proj-types';
 import { BaseSingleton, InvalidArgumentError } from '../utilities/utilities.js';
 import { TransientStateCache, BookmarkCacheReadonly } from './caches/caches.js';
@@ -125,6 +126,24 @@ export class TransientStateService extends BaseSingleton {
       }
     } else if (options.type === Popup.PROPERTIES) {
       const propPopup = <PropertiesPopup>options;
+      const node = propPopup.nodeId && BookmarkCacheReadonly.getNode(propPopup.nodeId);
+
+      if (node) {
+        let nFol = 0,
+          nBkm = 0;
+        propPopup.node = { ...node.dataTree, children: [] };
+        propPopup.parentChain = BookmarkCacheReadonly.getParentChain(node.id)
+          .map((node) => node.dataTree)
+          .map((node) => ({ ...node, children: [] }));
+
+        BookmarkCacheReadonly.getAllChildren(node.id).forEach((node) => {
+          node.type === NodeType.BKM ? nBkm++ : nFol++;
+        });
+
+        propPopup.folderStats = { nFol, nBkm };
+      }
+    } else if (options.type === Popup.DEL_FOL) {
+      const propPopup = <DeleteFolderPopup>options;
       const node = propPopup.nodeId && BookmarkCacheReadonly.getNode(propPopup.nodeId);
 
       if (node) {

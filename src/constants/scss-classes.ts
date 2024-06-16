@@ -94,6 +94,7 @@ enum PopupElementsRefCSS {
   NEW_FOL_CONT_ID = 'new-fol-popup-container-id',
   PROPERS_CONT_ID = 'properties-popup-container-id',
   THEME_CONT_ID = 'theme-popup-container-id',
+  DEL_FOL_ID = 'delete-folder-popup-container-id',
 
   POPUP_BTN_CONT_ID = 'popup-button-container-id',
 

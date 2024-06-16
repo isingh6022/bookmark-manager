@@ -10,7 +10,14 @@ import {
   pin,
   deselectAll
 } from '@proj-state';
-import { CtxMenuOption, FolCtxMenuProps, PAGES, Popup, PropertiesPopup } from '@proj-types';
+import {
+  CtxMenuOption,
+  DeleteFolderPopup,
+  FolCtxMenuProps,
+  PAGES,
+  Popup,
+  PropertiesPopup
+} from '@proj-types';
 import { CommonCtxMenuOptions, FolCtxMenuOptions } from '@proj-const';
 import { CtxMenu } from './context-menu.js';
 
@@ -91,7 +98,7 @@ export const FolCtxMenu: React.FC<FolCtxMenuProps> = ({
       type: Popup.PROPERTIES,
       title: '', // Determined by popup.
       message: '',
-      width: 400,
+      width: 450,
       closeOnOutsideClick: true,
       nodeId: node.id
     } as PropertiesPopup)
@@ -110,7 +117,17 @@ export const FolCtxMenu: React.FC<FolCtxMenuProps> = ({
   // );
 
   // delete
-  addOption(CommonCtxMenuOptions.DEL, rmv(node.id));
+  addOption(
+    CommonCtxMenuOptions.DEL,
+    popup({
+      type: Popup.DEL_FOL,
+      title: '',
+      message: '',
+      width: 450,
+      closeOnOutsideClick: true,
+      nodeId: node.id
+    } as DeleteFolderPopup)
+  );
 
   return <CtxMenu {...{ position, options, closeMenu }} />;
 };

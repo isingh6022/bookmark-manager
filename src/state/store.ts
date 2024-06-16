@@ -14,9 +14,10 @@ let settInit = false,
   bkmInit = false;
 
 const afterSettInit = () => {
-  let home = SettingsService.instance.getHomeFolder();
+  let home: string | undefined = '';
 
   STORE.dispatch(settingsDataInit());
+  home = SettingsService.instance.getHomeFolder();
   home && STORE.dispatch(setCurrNode(home));
 };
 

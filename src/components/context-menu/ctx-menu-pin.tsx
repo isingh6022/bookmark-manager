@@ -36,7 +36,7 @@ export const PinCtxMenu: React.FC<PinCtxMenuProps> = ({ pin, position, closeMenu
       type: Popup.PROPERTIES,
       title: '', // Determined by popup.
       message: '',
-      width: 400,
+      width: 450,
       closeOnOutsideClick: true,
       nodeId: pin.id
     } as PropertiesPopup)
