@@ -105,6 +105,10 @@ export class SettingsService extends BaseService {
       this.updateStateObject(state);
     }
   }
+  editPin(state: RetainedState, id: string, title: string) {
+    this._cache.editPin(id, title);
+    this.updateStateObject(state);
+  }
   unpinFolder(state: RetainedState, id: string) {
     let index = state.pinnedFolders.findIndex((pin) => pin.id === id);
     if (index !== -1) {

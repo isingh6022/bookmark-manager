@@ -102,6 +102,13 @@ export class SettingsCache extends BaseCache<RetainedState> {
     this._updateStorage();
   }
 
+  editPin(id: string, title: string) {
+    let pin = this._currentState.pinnedFolders.find((pin) => pin.id === id);
+    if (pin) {
+      pin.title = title;
+    }
+  }
+
   get isSynced(): boolean {
     return !Object.keys(this._outOfSyncData).length;
   }

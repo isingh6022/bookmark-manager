@@ -24,6 +24,9 @@ const settingsSlice = createSlice({
     pin: (state, action: PayloadAction<{ id: string; index?: number }>) => {
       SettingsService.instance.addPinnedFolder(state, action.payload.id, action.payload.index);
     },
+    editPin: (state, action: PayloadAction<{ id: string; newTitle: string }>) => {
+      SettingsService.instance.editPin(state, action.payload.id, action.payload.newTitle);
+    },
     homePin: (state, action: PayloadAction<string>) => {
       SettingsService.instance.setHomeFolder(state, action.payload);
     },
@@ -63,7 +66,7 @@ export const settingsReducer = settingsSlice.reducer;
 export const {
   settingsDataInit,
   bkmNodeFlow, bkmDispOrder, colCount,
-  pin, homePin, unpin, setPins, recheckPins,
+  pin, editPin, homePin, unpin, setPins, recheckPins,
   addTheme, rmvTheme, currTheme, edtTheme,
   dropOverSettings
 } = settingsSlice.actions;

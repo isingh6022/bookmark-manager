@@ -10,7 +10,7 @@ export {
 export {
     settingsDataInit,
     bkmNodeFlow, bkmDispOrder, colCount,
-    pin, homePin, unpin, setPins, recheckPins,
+    pin, editPin, homePin, unpin, setPins, recheckPins,
     addTheme, rmvTheme, currTheme, edtTheme,
     dropOverSettings
 } from './settings-slice.js';

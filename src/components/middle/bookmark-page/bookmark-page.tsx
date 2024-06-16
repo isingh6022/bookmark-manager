@@ -127,7 +127,7 @@ export const BookmarkPage: React.FC<any> = () => {
         ? searchData.result.map((nodeAndScore) => nodeAndScore.node)
         : node.children;
   visibleNodes =
-    displayOrder === BKM_DISPLAY_ORDER.groupAndSort
+    displayOrder === BKM_DISPLAY_ORDER.groupAndSort && currPageType === PAGES.bkmFolder
       ? Util.nodeIndices.groupAndSortNodes(visibleNodes)
       : visibleNodes;
 

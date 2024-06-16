@@ -1,6 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { MinorElementsRefCSS } from '@proj-const';
-import { AppDispatchType, selectDeselectNode, deselectAll, chg, rmvIco } from '@proj-state';
+import {
+  AppDispatchType,
+  selectDeselectNode,
+  deselectAll,
+  chg,
+  rmvIco,
+  editPin
+} from '@proj-state';
 import { BookmarkComponentStateMachine, FolderComponentStateMachine, Util } from '@proj-scripts';
 import {
   BookmarkTreeDataNode,
@@ -98,6 +105,7 @@ export class NodeModel {
   renameBlur(newTitle: string) {
     this._handleNodeStateEvent(NodeCommonStateEvents.RENAME_INPUT_BLUR);
     this._dispatch(chg({ changedNodeId: this._node.id, title: newTitle }));
+    this._node.type === NodeType.FOL && this._dispatch(editPin({ id: this._node.id, newTitle }));
   }
 
   // // drag drop handlers

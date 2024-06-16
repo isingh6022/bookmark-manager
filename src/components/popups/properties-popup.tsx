@@ -42,8 +42,8 @@ export const PropertiesPopupComponent: React.FC<PropertiesPopup> = ({
             <tr>
               <td>Contents</td>
               <td>
-                Folders :<BsFolder />
-                {folderStats.nFol} | Bookmarks: <BkmIco url={node.url} /> {folderStats.nBkm}
+                Folders :<BsFolder /> {folderStats.nFol} | Bookmarks: <BkmIco url={node.url} />{' '}
+                {folderStats.nBkm}
               </td>
             </tr>
           )}
