@@ -44,15 +44,11 @@ export const Folder: React.FC<
     titleProps['className'] = className;
   }
 
-  const renameInput: React.JSX.Element = (
-    <span>
-      <NodeRenameInput {...{ title: node.title, renameBlur }} />
-    </span>
-  );
+  const renameInput: React.JSX.Element = <NodeRenameInput {...{ title: node.title, renameBlur }} />;
   const titleElement: React.JSX.Element = (
     <span {...titleProps}>
       {state.expanded ? <BsFolder2Open /> : <BsFolder />}
-      {node.title}
+      {state.editing ? renameInput : node.title}
     </span>
   );
 
@@ -60,7 +56,7 @@ export const Folder: React.FC<
     <>
       {state.childrenInit ? (
         <div {...{ className, id }}>
-          {state.editing ? renameInput : titleElement}
+          {titleElement}
           <NodeChildrenColumn
             {...{
               childElements,
@@ -71,8 +67,6 @@ export const Folder: React.FC<
             }}
           ></NodeChildrenColumn>
         </div>
-      ) : state.editing ? (
-        renameInput
       ) : (
         titleElement
       )}

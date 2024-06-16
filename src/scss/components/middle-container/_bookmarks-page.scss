@@ -23,6 +23,7 @@
 
     .folder,
     .bookmark {
+      text-decoration: none;
       opacity: 1;
       transition:
         opacity $duration-1 $curve-quick-initially,
@@ -30,7 +31,7 @@
 
       // Selection
       &.node-selected {
-        background-color: #a5f4ff;
+        background-color: #9cd9e2 !important;
       }
 
       input {
@@ -98,10 +99,8 @@
   .node-ch-col span.folder.dragover.dragover-middle {
     border: $dragover-middle-border;
   }
-  .node-ch-col div.folder.dragover.dragover-middle {
-    span {
-      border: $dragover-middle-border;
-    }
+  .node-ch-col div.folder.dragover.dragover-middle > span {
+    border: $dragover-middle-border;
   }
 
   .node-ch-col span.folder,
@@ -114,10 +113,10 @@
     }
   }
 
-  .node-ch-col div.folder.dragover-top span {
+  .node-ch-col div.folder.dragover-top > span {
     border-top: $dragover-top-border-top;
   }
-  .node-ch-col div.folder.dragover-bottom span {
+  .node-ch-col div.folder.dragover-bottom > span {
     border-bottom: $dragover-bottom-border-bottom;
   }
 
@@ -139,16 +138,16 @@
     }
   }
 
-  .node-ch-col.node-ch-col-row-flow div.folder.dragover-top span {
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-top > span {
     border-top: 0;
   }
-  .node-ch-col.node-ch-col-row-flow div.folder.dragover-bottom span {
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-bottom > span {
     border-bottom: 1px solid black;
   }
-  .node-ch-col.node-ch-col-row-flow div.folder.dragover-left span {
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-left > span {
     border-left: $dragover-left-border-left;
   }
-  .node-ch-col.node-ch-col-row-flow div.folder.dragover-right span {
+  .node-ch-col.node-ch-col-row-flow div.folder.dragover-right > span {
     border-right: $dragover-right-border-right;
   }
 }

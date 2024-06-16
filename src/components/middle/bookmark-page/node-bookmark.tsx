@@ -24,7 +24,7 @@ export const Bookmark: React.FC<
     url = node.url;
 
   return (
-    <a {...{ className, onClick, onContextMenu, id }}>
+    <a {...{ className, onClick, onContextMenu, id }} href={node.url}>
       <BkmIco url={node.url} />{' '}
       {state.editing ? (
         <NodeRenameInput {...{ title: node.title, renameBlur }} />

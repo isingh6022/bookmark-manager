@@ -6,7 +6,11 @@ const CtxMenuEl: React.FC<{
   menuOptions: CtxMenuOption;
   closeMenu: () => void;
 }> = ({ menuOptions, closeMenu }) => (
-  <div {...{ onClick: (e) => (e.stopPropagation(), menuOptions.onClick(), closeMenu()) }}>
+  <div
+    {...{
+      onClick: (e) => (e.stopPropagation(), e.preventDefault(), menuOptions.onClick(), closeMenu())
+    }}
+  >
     {menuOptions.title}
   </div>
 );
