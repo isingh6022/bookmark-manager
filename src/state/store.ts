@@ -8,7 +8,10 @@ import {
   transientStateReducer as transient
 } from './slices/reducers.js';
 
-export const STORE = configureStore({ reducer: { bookmarks, settings, transient } });
+export const STORE = configureStore({
+  reducer: { bookmarks, settings, transient },
+  devTools: false
+});
 
 let settInit = false,
   bkmInit = false;

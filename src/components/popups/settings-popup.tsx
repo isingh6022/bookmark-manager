@@ -53,11 +53,11 @@ export const SettingsPopupComponent: React.FC<SettingsPopup> = (popup) => {
         titleSpan: FieldSpan.FULL,
         options: [
           {
-            optionLabel: 'Row',
+            optionLabel: 'Row (Do not use)',
             value: FLOW.Row
           },
           {
-            optionLabel: 'Column',
+            optionLabel: 'Column (Better)',
             value: FLOW.Col
           }
         ]
