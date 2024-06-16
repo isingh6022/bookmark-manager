@@ -1,6 +1,6 @@
 {
   "name": "bookmark-manager",
-  "version": "1.0.0",
+  "version": "9.0.0",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -16,7 +16,7 @@
     "license-summary": "license-checker --summary",
     "license-detail": "license-checker --out ./build/license-detail.txt",
     "license-ltd-types": "license-checker --out ./build/license-detail.txt --exclude [MIT,Apache-2.0,ISC,BSD-2-Clause,BSD-3-Clause]",
-    "cloc": "cloc src"
+    "cloc": "cloc src && cloc persistent-storage"
   },
   "keywords": [],
   "author": "",
