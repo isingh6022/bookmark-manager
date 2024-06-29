@@ -1,58 +1,35 @@
-Persist RetainedState properties in browser storage.
-
-Refresh Folder pins upon deletion or updation.
-
-Uniform enum and constants capitalization convention
-
-Decorator design pattern for node state machines.
-
-Select fonts
-
-Different name in bookmark bar option for top bar.
-
-Event dispatch for drag drop and ctx menu.
-
-Themes (colour).
-
-Stop using DEFAULT_BKM_PG_FOL_COL_COUNT.
-
-Remove commented out IconsCache code from BookmarkCache.
-
-Create mechanism to ignore some of the updates from browser, as the updates are sometimes
-first done in cache and then optimistically sent to the browser.
-
+TO DO: -
+Change font (from suggestions).
 Make import end work the same way as it did earlier.
-
-Fix broken references in case the bookmark data objects are updated.
-
-Implement non-functional context menu options - ctx menu files.
-
-Implement onClose for layout layer - to be used by popups to close themselves with their layer.
-
-Fix the structure of types.
-
 Search is synchronous and can cause delay - make it async.
-
 Show bookmark generic icon based on setting - MAY BE DROPPED.
-
-Update Bookmark page when an event from browser is received - redux subscription for events from browser.
-
-Address bar search.
-
-Show bookmarks in batches of 1000 on bookmark page.
-
+Show bookmarks in batches of 1000 on recent page.
 CTRL + DROP creates a copy.
-
-Add following ctx menu options: Move, Copy, Edit
-
-Create rename text input
-
-Set max number of columns on bkm page.
-
+Add following ctx menu options: Move, Copy, new sub folder (from suggestions), Edit
 Handle clicks on local urls.
+
 
 DONE:-
 remove public from all variable and method declarations.
-
 Create BaseSingleton class.
+Create rename text input
+Set max number of columns on bkm page.
+Themes (colour).
+Address bar search.
+Update Bookmark page when an event from browser is received - redux subscription for events from browser.
+Fix broken references in case the bookmark data objects are updated.
+Create mechanism to ignore some of the updates from browser, as the updates are sometimes first done in cache and then optimistically sent to the browser.
+Event dispatch for drag drop and ctx menu.
+Persist RetainedState properties in browser storage.
+Refresh Folder pins upon deletion or updation.
+Remove commented out IconsCache code from BookmarkCache.
+Uniform enum and constants capitalization convention
 
+
+DROPPED: -
+Different name in bookmark bar option for top bar.
+
+
+SUGGESTIONS: -
+Add new sub folder option in context menu.
+Change font.

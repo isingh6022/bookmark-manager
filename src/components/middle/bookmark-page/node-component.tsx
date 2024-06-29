@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatchType } from '@proj-state';
-import { BookmarkTreeDataNode, MODE, NodeCommonStateEvents, NodeType, Position } from '@proj-types';
+import { BookmarkTreeDataNode, Mode, NodeCommonStateEvents, NodeType, Position } from '@proj-types';
 import { Bookmark } from './node-bookmark.js';
 import { Folder } from './node-folder.js';
 import { NodeModel } from './node-model.js';
 
 export const NodeComponent: React.FC<{
   node: BookmarkTreeDataNode;
-  mode: MODE;
+  mode: Mode;
   inOddSubFolder: boolean;
 }> = ({ node, mode, inOddSubFolder }) => {
   const dispatch = useDispatch<AppDispatchType>();

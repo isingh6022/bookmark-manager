@@ -1,11 +1,11 @@
 import {
-  BKM_DISPLAY_ORDER,
+  BkmDisplayOrder,
   BookmarkTreeNode,
   DragoverOrDropType,
   DragstartInfo,
   DragstartType,
   DropInfo,
-  FLOW,
+  Flow,
   ReadonlySettingsCache,
   RetainedState,
   Theme
@@ -39,14 +39,14 @@ export class SettingsCache extends BaseCache<RetainedState> {
     this._outOfSyncData = {};
   }
 
-  set flowDirection(val: FLOW) {
+  set flowDirection(val: Flow) {
     if (this._currentState.flowDirection === val) {
       return;
     }
     this._outOfSyncData.flowDirection = this._currentState.flowDirection = val;
     this._updateStorage();
   }
-  set bkmDisplayOrder(val: BKM_DISPLAY_ORDER) {
+  set bkmDisplayOrder(val: BkmDisplayOrder) {
     if (this._currentState.bkmDisplayOrder === val) {
       return;
     }

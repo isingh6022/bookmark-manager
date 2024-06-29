@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { AppDispatchType, page, setCurrNode, showNode } from '@proj-state';
 import { PopupElementsRefCSS } from '@proj-const';
-import { NodeType, PAGES, PropertiesPopup } from '@proj-types';
+import { NodeType, Pages, PropertiesPopup } from '@proj-types';
 import { BkmIco } from '../middle/bookmark-page/node-bookmark-icon.js';
 import { BsFolder } from '../project-icons.js';
 
@@ -53,7 +53,7 @@ export const PropertiesPopupComponent: React.FC<PropertiesPopup> = ({
         <button
           onClick={() => {
             dispatch(setCurrNode(node.parentId));
-            dispatch(page({ page: PAGES.bkmFolder, folder: node.parentId }));
+            dispatch(page({ page: Pages.BKM_FOLDER, folder: node.parentId }));
           }}
         >
           Open Parent Folder

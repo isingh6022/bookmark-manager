@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { PAGES } from '@proj-types';
+import { Pages } from '@proj-types';
 import { BookmarkPage, DuplicatesPage } from './middle/pages.js';
 import { UnknownPageType } from '@proj-scripts';
 import { RootStateType } from '@proj-state';
@@ -16,18 +16,18 @@ import { AddressBar } from './top/address-bar.js';
 import { PageButtons } from './top/page-buttons.js';
 import { StateButtons } from './top/state-buttons.js';
 
-const stateSelectorPage = (state: RootStateType): PAGES => state.transient.currPage;
+const stateSelectorPage = (state: RootStateType): Pages => state.transient.currPage;
 
 export const Page: React.FC<any> = () => {
   const page = useSelector(stateSelectorPage);
   let pageComponent: React.JSX.Element;
 
   switch (page) {
-    case PAGES.bkmFolder:
-    case PAGES.recent:
+    case Pages.BKM_FOLDER:
+    case Pages.RECENT:
       pageComponent = <BookmarkPage />;
       break;
-    case PAGES.duplicates:
+    case Pages.DUPLICATES:
       pageComponent = <DuplicatesPage />;
       break;
     default:

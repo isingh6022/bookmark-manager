@@ -1,19 +1,19 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { DragstartInfo, DropInfo, MODE, PAGES, PopupConfig } from '@proj-types';
+import { DragstartInfo, DropInfo, Mode, Pages, PopupConfig } from '@proj-types';
 import { TransientStateService } from '@proj-scripts';
 
 const transientStateSlice = createSlice({
   name: 'temporaryStateSlice',
   initialState: TransientStateService.instance.getInitState(),
   reducers: {
-    page: (state, action: PayloadAction<{ page: PAGES; folder?: string }>) => {
+    page: (state, action: PayloadAction<{ page: Pages; folder?: string }>) => {
       TransientStateService.instance.setPage(state, {
         page: action.payload.page,
         folderId: action.payload.folder
       });
     },
-    mode: (state, action: PayloadAction<MODE>) => {
+    mode: (state, action: PayloadAction<Mode>) => {
       TransientStateService.instance.setMode(state, action.payload);
     },
 

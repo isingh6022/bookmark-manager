@@ -14,7 +14,7 @@ import {
   CtxMenuOption,
   DeleteFolderPopup,
   FolCtxMenuProps,
-  PAGES,
+  Pages,
   Popup,
   PropertiesPopup
 } from '@proj-types';
@@ -67,7 +67,7 @@ export const FolCtxMenu: React.FC<FolCtxMenuProps> = ({
   options.push({
     title: FolCtxMenuOptions.OPEN_FULL,
     onClick: () => {
-      dispatch(page({ page: PAGES.bkmFolder, folder: node.id }));
+      dispatch(page({ page: Pages.BKM_FOLDER, folder: node.id }));
       dispatch(deselectAll());
       dispatch(setCurrNode(node.id));
     }
@@ -88,7 +88,7 @@ export const FolCtxMenu: React.FC<FolCtxMenuProps> = ({
   // Open node location
   addOption(CommonCtxMenuOptions.OPEN_LOCATION, [
     setCurrNode(node.parentId),
-    page({ page: PAGES.bkmFolder, folder: node.parentId })
+    page({ page: Pages.BKM_FOLDER, folder: node.parentId })
   ]);
 
   // show properties

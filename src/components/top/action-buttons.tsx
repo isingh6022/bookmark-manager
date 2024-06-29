@@ -16,7 +16,7 @@ import {
   ReduxSelectorForArrOfElements
 } from '@proj-state';
 import { BsFolderPlus, BsPencilSquare, BsPencilFill } from '../project-icons.js';
-import { BookmarkTreeDataNode, MODE, NewFolderPopup, PAGES, Popup } from '@proj-types';
+import { BookmarkTreeDataNode, Mode, NewFolderPopup, Pages, Popup } from '@proj-types';
 
 const NewFolderButton: React.FC<{ currNodeId: string }> = ({ currNodeId }) => {
   const dispatch = useDispatch<AppDispatchType>();
@@ -42,12 +42,12 @@ const NewFolderButton: React.FC<{ currNodeId: string }> = ({ currNodeId }) => {
   );
 };
 
-const EditModeButton: React.FC<{ currMode: MODE }> = ({ currMode }) => {
+const EditModeButton: React.FC<{ currMode: Mode }> = ({ currMode }) => {
   const dispatch = useDispatch<AppDispatchType>();
-  const editMode = currMode === MODE.edit;
+  const editMode = currMode === Mode.EDIT;
 
   const onClick = () => {
-    dispatch(mode(editMode ? MODE.default : MODE.edit));
+    dispatch(mode(editMode ? Mode.DEFAULT : Mode.EDIT));
     dispatch(deselectAll());
   };
 
@@ -63,7 +63,7 @@ const EditModeButton: React.FC<{ currMode: MODE }> = ({ currMode }) => {
 };
 
 const newFolButtonSelector = new ReduxSelectorForArrOfElements(
-  (state: RootStateType): [BookmarkTreeDataNode, PAGES, MODE] => [
+  (state: RootStateType): [BookmarkTreeDataNode, Pages, Mode] => [
     state.bookmarks.currNode,
     state.transient.currPage,
 
@@ -72,7 +72,7 @@ const newFolButtonSelector = new ReduxSelectorForArrOfElements(
 ).selector;
 export const ActionButtons: React.FC<any> = () => {
   const [currNode, page, currMode] = useSelector(newFolButtonSelector);
-  return page === PAGES.bkmFolder && currNode && currNode.id !== ROOT_NODE_CONSTANTS.id ? (
+  return page === Pages.BKM_FOLDER && currNode && currNode.id !== ROOT_NODE_CONSTANTS.id ? (
     <div
       className={Util.misc.mergeClassNames(
         GenericClassCSS.FLEX_ROW_CENTER_NOWRAP,

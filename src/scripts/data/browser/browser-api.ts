@@ -1,12 +1,12 @@
-import { BROWSER_TYPE, BrowserAPIs } from '@proj-types';
+import { BrowserType, BrowserAPIs } from '@proj-types';
 import { getChromeAPIs } from './browser-api-impl/chrome-api.js';
 import { getMockAPIs } from './browser-api-impl/mock-browser-api.js';
 
-const browserType: BROWSER_TYPE = <any>BROWSER_TYPE.Chrome;
+const browserType: BrowserType = <any>BrowserType.CHROME;
 
 let browser: BrowserAPIs;
 
-if (browserType === BROWSER_TYPE.Chrome) {
+if (browserType === BrowserType.CHROME) {
   browser = getChromeAPIs();
 } else {
   browser = getMockAPIs();

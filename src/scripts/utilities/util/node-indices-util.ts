@@ -1,5 +1,5 @@
 import { DragDropClassCSS, MIN_NODES_PER_ROW, MinorElementsRefCSS } from '@proj-const';
-import { BookmarkTreeDataNode, DropZone, FLOW, NodeType } from '@proj-types';
+import { BookmarkTreeDataNode, DropZone, Flow, NodeType } from '@proj-types';
 import { MiscUtil } from './misc-util.js';
 
 export class NodeIndices {
@@ -66,7 +66,7 @@ export class NodeIndices {
   }
 
   static getNodeChildrenColClass(
-    flow: FLOW,
+    flow: Flow,
     index: number,
     colCount: number,
     isRootCol: boolean,
@@ -74,7 +74,7 @@ export class NodeIndices {
   ): string {
     return MiscUtil.mergeClassNames(
       MinorElementsRefCSS.NOD_CH_COL,
-      flow === FLOW.Row ? MinorElementsRefCSS.NOD_CH_COL_ROW_FLOW : '',
+      flow === Flow.ROW ? MinorElementsRefCSS.NOD_CH_COL_ROW_FLOW : '',
       isRootCol ? MinorElementsRefCSS.NOD_CH_ROOT : '',
       isRootCol
         ? ''
@@ -155,11 +155,11 @@ export class NodeIndices {
     }
   }
 
-  static getNodeListForCol(dir: FLOW, nodes: any[], index: number, colCount: number): any[] {
+  static getNodeListForCol(dir: Flow, nodes: any[], index: number, colCount: number): any[] {
     switch (dir) {
-      case FLOW.Row:
+      case Flow.ROW:
         return NodeIndices._getNodeListRowDir(nodes, index, colCount);
-      case FLOW.Col:
+      case Flow.COL:
         return NodeIndices._getNodeListColDir(nodes, index, colCount);
       default:
         return NodeIndices._getNodeListRowDir(nodes, index, colCount);

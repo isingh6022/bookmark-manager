@@ -2,16 +2,16 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropClassCSS, PageRefCSS } from '@proj-const';
 import {
-  BKM_DISPLAY_ORDER,
+  BkmDisplayOrder,
   BookmarkTreeDataNode,
   DragoverOrDropType,
   DragstartType,
   DropInfo,
   DropZone,
-  FLOW,
-  MODE,
+  Flow,
+  Mode,
   NodeType,
-  PAGES,
+  Pages,
   SearchData
 } from '@proj-types';
 import {
@@ -39,11 +39,11 @@ import { NodeComponent } from './node-component.js';
 // prettier-ignore
 type T = [
   BookmarkTreeDataNode,
-  MODE, FLOW, BKM_DISPLAY_ORDER,
+  Mode, Flow, BkmDisplayOrder,
   number,
   boolean,
   SearchData | null,
-  PAGES
+  Pages
 ];
 const stateSelectorBookmarkPage = new ReduxSelectorForArrOfElements<T>((state: RootStateType) => [
   state.bookmarks.currNode,
@@ -121,13 +121,13 @@ export const BookmarkPage: React.FC<any> = () => {
   };
 
   let visibleNodes =
-    currPageType === PAGES.recent
+    currPageType === Pages.RECENT
       ? Util.nodeIndices.getChildBkmNodesByDate(node)
       : showSearch && searchData
         ? searchData.result.map((nodeAndScore) => nodeAndScore.node)
         : node.children;
   visibleNodes =
-    displayOrder === BKM_DISPLAY_ORDER.groupAndSort && currPageType === PAGES.bkmFolder
+    displayOrder === BkmDisplayOrder.GROUP_AND_SORT && currPageType === Pages.BKM_FOLDER
       ? Util.nodeIndices.groupAndSortNodes(visibleNodes)
       : visibleNodes;
 
@@ -158,7 +158,7 @@ export const BookmarkPage: React.FC<any> = () => {
       {showSearch && searchData ? <SearchStats {...{ searchData, node }} /> : ''}
       <div
         id={
-          showSearch || currPageType === PAGES.recent
+          showSearch || currPageType === Pages.RECENT
             ? PageRefCSS.SEARCH_OR_RECENT_CONT_ID
             : PageRefCSS.BOOKMARK_CONT_ID
         }

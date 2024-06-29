@@ -138,7 +138,7 @@ const ThemeField: React.FC<{
 };
 
 //
-enum ThemeSec {
+enum ThemeSection {
   TOP = 'TOP',
   LFT = 'LFT',
   MID = 'MID',
@@ -156,7 +156,7 @@ export const ThemePopupComponent: React.FC<ThemePopup> = ({}) => {
   const currTheme = useSelector<RootStateType, Theme>((state) => state.settings.currTheme);
   const dispatch = useDispatch<AppDispatchType>();
 
-  const [currSec, setCurrSec] = useState(ThemeSec.MID);
+  const [currSec, setCurrSec] = useState(ThemeSection.MID);
   const [creating, setCreating] = useState(false);
   const create = (newThemeName: string) => {
     const newThemeRef = Util.misc.cloneSerializable(currTheme);
@@ -177,11 +177,11 @@ export const ThemePopupComponent: React.FC<ThemePopup> = ({}) => {
     );
 
     const forms = [
-      { form: formProps.topColors, displayEnum: ThemeSec.TOP, name: 'Top Bar' },
-      { form: formProps.middleColors, displayEnum: ThemeSec.MID, name: 'Middle' },
-      { form: formProps.leftColors, displayEnum: ThemeSec.LFT, name: 'Left Panel' },
-      { form: formProps.rightColors, displayEnum: ThemeSec.RGT, name: 'Right Panel' },
-      { form: formProps.popupColors, displayEnum: ThemeSec.POP, name: 'Popup' }
+      { form: formProps.topColors, displaySection: ThemeSection.TOP, name: 'Top Bar' },
+      { form: formProps.middleColors, displaySection: ThemeSection.MID, name: 'Middle' },
+      { form: formProps.leftColors, displaySection: ThemeSection.LFT, name: 'Left Panel' },
+      { form: formProps.rightColors, displaySection: ThemeSection.RGT, name: 'Right Panel' },
+      { form: formProps.popupColors, displaySection: ThemeSection.POP, name: 'Popup' }
     ];
 
     return forms;
@@ -201,20 +201,22 @@ export const ThemePopupComponent: React.FC<ThemePopup> = ({}) => {
         ? []
         : getFormProps().map((form) => {
             return (
-              <div key={form.displayEnum}>
+              <div key={form.displaySection}>
                 <h1
                   onClick={(e) =>
-                    setCurrSec(currSec === form.displayEnum ? ThemeSec.NUL : form.displayEnum)
+                    setCurrSec(
+                      currSec === form.displaySection ? ThemeSection.NUL : form.displaySection
+                    )
                   }
                 >
                   <BsCaretRightFill
-                    className={currSec === form.displayEnum ? GenericClassCSS.ROT_90_CLOC : ''}
+                    className={currSec === form.displaySection ? GenericClassCSS.ROT_90_CLOC : ''}
                   />
                   {form.name}
                 </h1>
                 <div
                   className={MinorElementsRefCSS.FORM_ELEMENTS_CONT}
-                  style={{ display: currSec === form.displayEnum ? 'flex' : 'none' }}
+                  style={{ display: currSec === form.displaySection ? 'flex' : 'none' }}
                 >
                   {form.form.map((formElProps) => {
                     return isFieldProp(formElProps) ? (

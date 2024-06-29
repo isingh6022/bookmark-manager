@@ -9,7 +9,7 @@ import {
 } from '@proj-const';
 import { Util } from '@proj-scripts';
 import { page, popup, AppDispatchType, deselectAll, setCurrNode } from '@proj-state';
-import { PAGES, Popup } from '@proj-types';
+import { Pages, Popup } from '@proj-types';
 import { BsGear, BsCopy, BsCalendar2Date, MdOutlineColorLens } from '../project-icons.js';
 
 const SettingsPageButton: React.FC<any> = () => {
@@ -67,7 +67,7 @@ const DuplicatesPageButton: React.FC<any> = () => {
     <div
       onClick={() => {
         dispatch(setCurrNode(ROOT_NODE_CONSTANTS.id));
-        dispatch(page({ page: PAGES.duplicates }));
+        dispatch(page({ page: Pages.DUPLICATES }));
         dispatch(deselectAll());
       }}
       title={TIPS.DUPLICATES}
@@ -84,7 +84,7 @@ const RecentsPageButton: React.FC<any> = () => {
     <div
       onClick={() => {
         dispatch(setCurrNode(ROOT_NODE_CONSTANTS.id));
-        dispatch(page({ page: PAGES.recent })), dispatch(deselectAll());
+        dispatch(page({ page: Pages.RECENT })), dispatch(deselectAll());
       }}
       title={TIPS.RECENT}
     >

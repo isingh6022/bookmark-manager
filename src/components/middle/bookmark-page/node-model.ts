@@ -13,7 +13,7 @@ import {
   BookmarkTreeDataNode,
   NodeStateObject,
   FolderStateObject,
-  MODE,
+  Mode,
   NodeCommonStateEvents,
   NodeType
 } from '@proj-types';
@@ -38,7 +38,7 @@ export class NodeModel {
 
   constructor(
     private _node: BookmarkTreeDataNode,
-    private _mode: MODE,
+    private _mode: Mode,
     private _state: NodeStateObject | FolderStateObject,
     private _handleNodeStateEvent: (event: NodeCommonStateEvents) => void,
     private _updateMenuPosition: (position: { x: number; y: number }) => void,
@@ -69,14 +69,14 @@ export class NodeModel {
    * @param e React click event
    */
   onClick(e?: React.MouseEvent<HTMLElement, MouseEvent>) {
-    if (this._mode === MODE.edit && e && !e.ctrlKey) {
+    if (this._mode === Mode.EDIT && e && !e.ctrlKey) {
       e.preventDefault();
       this._dispatch(selectDeselectNode({ id: this._node.id, shiftKey: e.shiftKey }));
     } else {
       this._handleNodeStateEvent(NodeCommonStateEvents.CLICK);
       NodeModel.isFolderState(this._state, this._node) &&
         !this._state.expanded &&
-        this._mode === MODE.edit &&
+        this._mode === Mode.EDIT &&
         this._dispatch(deselectAll(this._node.id));
     }
   }

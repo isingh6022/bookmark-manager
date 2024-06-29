@@ -1,5 +1,5 @@
 import {
-  BKM_DISPLAY_ORDER,
+  BkmDisplayOrder,
   RetainedState,
   STORAGE_DATA_OBJECT,
   StorageDAO,
@@ -38,8 +38,8 @@ export class SettingsDAO
         let state = {
           flowDirection: data.flowDirection,
           bkmDisplayOrder: data.groupBkmFol
-            ? BKM_DISPLAY_ORDER.groupAndSort
-            : BKM_DISPLAY_ORDER.default,
+            ? BkmDisplayOrder.GROUP_AND_SORT
+            : BkmDisplayOrder.DEFAULT,
           pinnedFolders: [],
           folderPinIds: data.pins,
           bkmFolderColCount: data.colCount,
@@ -56,7 +56,7 @@ export class SettingsDAO
 
     if (data.flowDirection) saveData.flowDirection = data.flowDirection.toString();
     if (data.bkmDisplayOrder || data.bkmDisplayOrder === 0)
-      saveData.groupBkmFol = data.bkmDisplayOrder === BKM_DISPLAY_ORDER.groupAndSort;
+      saveData.groupBkmFol = data.bkmDisplayOrder === BkmDisplayOrder.GROUP_AND_SORT;
     if (data.pinnedFolders) saveData.pins = data.pinnedFolders.map((pin) => pin.id);
     if (data.bkmFolderColCount) saveData.colCount = data.bkmFolderColCount;
     if (data.homeFolder) saveData.homePin = data.homeFolder;

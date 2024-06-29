@@ -1,6 +1,6 @@
 import { SUBFOLDER_HEIGHT_CHANGE_DELAY } from '@proj-const';
 import { Util } from '@proj-scripts';
-import { FLOW } from '@proj-types';
+import { Flow } from '@proj-types';
 import React, { useEffect, useRef, useState } from 'react';
 
 interface NodeChildrenColumn {
@@ -9,7 +9,7 @@ interface NodeChildrenColumn {
   columnIndex?: number;
   animateHeight?: boolean;
   collapse?: boolean;
-  flowDirection?: FLOW;
+  flowDirection?: Flow;
   isRootCol?: boolean;
   hasOddSubFolChildren?: boolean;
 }
@@ -52,7 +52,7 @@ export const NodeChildrenColumn: React.FC<NodeChildrenColumn> = ({
   columnIndex = 0,
   animateHeight = false,
   collapse = false,
-  flowDirection = FLOW.Col,
+  flowDirection = Flow.COL,
   isRootCol,
   hasOddSubFolChildren
 }) => {

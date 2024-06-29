@@ -1,5 +1,5 @@
 import { SettingsService } from '@proj-scripts';
-import { BKM_DISPLAY_ORDER, DropInfo, FLOW, Theme } from '@proj-types';
+import { BkmDisplayOrder, DropInfo, Flow, Theme } from '@proj-types';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 const settingsSlice = createSlice({
@@ -12,10 +12,10 @@ const settingsSlice = createSlice({
     colCount: (state, action: PayloadAction<number>) => {
       SettingsService.instance.setBkmFolderColCount(state, action.payload);
     },
-    bkmNodeFlow: (state, action: PayloadAction<FLOW>) => {
+    bkmNodeFlow: (state, action: PayloadAction<Flow>) => {
       SettingsService.instance.setFlowDirection(state, action.payload);
     },
-    bkmDispOrder: (state, action: PayloadAction<BKM_DISPLAY_ORDER>) => {
+    bkmDispOrder: (state, action: PayloadAction<BkmDisplayOrder>) => {
       SettingsService.instance.setBkmDisplayOrder(state, action.payload);
     },
     setPins: (state, action: PayloadAction<string[]>) => {

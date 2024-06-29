@@ -1,6 +1,6 @@
 // prettier-ignore
 import {
-  BookmarkTreeDataNode, BookmarkTreeNode, MODE, PAGES,
+  BookmarkTreeDataNode, BookmarkTreeNode, Mode, Pages,
   DragNodeData, DragstartType, DropZone,
   SyncedStorage, TransientState, PopupConfig,
   DropInfo, DragstartInfo,
@@ -37,17 +37,17 @@ export class TransientStateCache extends BaseSingleton implements SyncedStorage<
   }
   setBkmPage(folderId: string): boolean {
     let visitedIds = this._currentState.visitedFolderIds;
-    this._currentState.currPage = PAGES.bkmFolder;
+    this._currentState.currPage = Pages.BKM_FOLDER;
 
     if (visitedIds[visitedIds.length - 1] === folderId) return false;
 
     this._currentState.visitedFolderIds.push(folderId);
-    this._currentState.currMode = MODE.default;
+    this._currentState.currMode = Mode.DEFAULT;
 
     return true;
   }
-  setOtherPage(page: PAGES): boolean {
-    if (page === PAGES.bkmFolder) {
+  setOtherPage(page: Pages): boolean {
+    if (page === Pages.BKM_FOLDER) {
       throw new InvalidArgumentError(TransientStateCache.name, 'setOtherPage', 'page', page);
     }
     if (this._currentState.currPage === page) return false;
@@ -55,7 +55,7 @@ export class TransientStateCache extends BaseSingleton implements SyncedStorage<
     this._currentState.currPage = page;
     return true;
   }
-  set mode(mode: MODE) {
+  set mode(mode: Mode) {
     this._currentState.currMode = mode;
   }
   setDragstart(dragstartInfo: DragstartInfo, dragstartNode: DragNodeData) {

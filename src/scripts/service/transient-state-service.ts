@@ -1,6 +1,6 @@
 // prettier-ignore
 import {
-  BookmarkTreeDataNode, MODE, PAGES,
+  BookmarkTreeDataNode, Mode, Pages,
   DragNodeData, DragstartType, DropZone,
   TransientState,
   PopupConfig,
@@ -47,13 +47,13 @@ export class TransientStateService extends BaseSingleton {
     targetState.popup = currState.popup ? { ...currState.popup } : null;
   }
 
-  setPage(state: TransientState, pageVal: { page: PAGES; folderId?: string }) {
+  setPage(state: TransientState, pageVal: { page: Pages; folderId?: string }) {
     // pageVal.page =
     //   pageVal.page === PAGES.recent && state.currPage === PAGES.recent
     //     ? PAGES.bkmFolder
     //     : pageVal.page;
 
-    if (pageVal.page === PAGES.bkmFolder) {
+    if (pageVal.page === Pages.BKM_FOLDER) {
       if (!pageVal.folderId || !BookmarkCacheReadonly.hasNode(pageVal.folderId)) {
         throw new InvalidArgumentError(
           TransientStateService.name,
@@ -72,7 +72,7 @@ export class TransientStateService extends BaseSingleton {
     state.currPage = pageVal.page;
   }
 
-  setMode(state: TransientState, val: MODE) {
+  setMode(state: TransientState, val: Mode) {
     this._cache.mode = val;
 
     if (state.currMode !== val) {

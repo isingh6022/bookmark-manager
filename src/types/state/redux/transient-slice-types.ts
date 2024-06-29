@@ -2,15 +2,15 @@ import { NodeType } from '../../data/node.js';
 import { DragstartType } from '../drag-types.js';
 import { PopupConfig } from './popup-types.js';
 
-enum MODE {
-  default,
-  edit
+enum Mode {
+  DEFAULT,
+  EDIT
 }
 
-enum PAGES {
-  duplicates,
-  recent,
-  bkmFolder // default state when a bkm folder is being displayed.
+enum Pages {
+  DUPLICATES,
+  RECENT,
+  BKM_FOLDER // default state when a bkm folder is being displayed.
 }
 
 interface DragNodeData {
@@ -21,8 +21,8 @@ interface DragNodeData {
 
 interface TransientState {
   visitedFolderIds: string[];
-  currPage: PAGES;
-  currMode: MODE;
+  currPage: Pages;
+  currMode: Mode;
   dragDrop: {
     dragging: boolean;
     dragstartNode?: DragNodeData;
@@ -32,5 +32,5 @@ interface TransientState {
   popup: PopupConfig | null;
 }
 
-export { MODE, PAGES };
+export { Mode, Pages };
 export type { TransientState, DragNodeData };

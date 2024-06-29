@@ -1,18 +1,18 @@
 import { Theme } from '../../theme/types-theme.js';
 
-enum FLOW {
-  Row = 'row',
-  Col = 'col'
+enum Flow {
+  ROW = 'row',
+  COL = 'col'
 }
 
-enum BKM_DISPLAY_ORDER {
-  default,
-  groupAndSort
+enum BkmDisplayOrder {
+  DEFAULT,
+  GROUP_AND_SORT
 }
 
 interface RetainedState {
-  flowDirection: FLOW;
-  bkmDisplayOrder: BKM_DISPLAY_ORDER;
+  flowDirection: Flow;
+  bkmDisplayOrder: BkmDisplayOrder;
   pinnedFolders: { id: string; title: string; removable: boolean }[];
   bkmFolderColCount: number;
   homeFolder?: string;
@@ -20,5 +20,5 @@ interface RetainedState {
   currTheme: Theme;
 }
 
-export { FLOW, BKM_DISPLAY_ORDER };
+export { Flow, BkmDisplayOrder };
 export type { RetainedState };

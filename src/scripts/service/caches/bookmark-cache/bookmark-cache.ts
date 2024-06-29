@@ -1,6 +1,6 @@
 // prettier-ignore
 import {
-  BrowserBkmNode, BookmarkTreeDataNode, NodeType, BookmarkTreeNode, FLOW,
+  BrowserBkmNode, BookmarkTreeDataNode, NodeType, BookmarkTreeNode, Flow,
 
   BkmEvent, BkmEventType,
   ChReordered, ChangedEvent, CreatedEvent,
@@ -226,7 +226,7 @@ export class BookmarkCache extends EventManager {
     return this.getAllNodes(parentId).filter((node) => node.selected);
   }
 
-  drop(dragInfo: DragstartInfo, dropInfo: DropInfo, flowDirection: FLOW) {
+  drop(dragInfo: DragstartInfo, dropInfo: DropInfo, flowDirection: Flow) {
     let startNode = this.getNode(dragInfo.dragstartNode),
       dropNode = this.getNode(dropInfo.dropTarget ?? undefined);
     if (!this._isValidDrop(dragInfo, dropInfo) || !startNode || !dropNode) return;
@@ -242,7 +242,7 @@ export class BookmarkCache extends EventManager {
       }
     };
 
-    let rowDirection = flowDirection === FLOW.Row,
+    let rowDirection = flowDirection === Flow.ROW,
       colDirection = !rowDirection;
 
     if (dropInfo.dropType === DragoverOrDropType.BKM) {

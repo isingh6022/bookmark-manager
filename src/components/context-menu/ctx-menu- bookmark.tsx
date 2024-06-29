@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { CtxMenuOption, BkmCtxMenuProps, Popup, PropertiesPopup, PAGES } from '@proj-types';
+import { CtxMenuOption, BkmCtxMenuProps, Popup, PropertiesPopup, Pages } from '@proj-types';
 import { AppDispatchType, rmv, popup, ico, showNode, setCurrNode, page, rmvIco } from '@proj-state';
 import { CommonCtxMenuOptions, BkmCtxMenuOptions } from '@proj-const';
 import { CtxMenu } from './context-menu.js';
@@ -76,7 +76,7 @@ export const BkmCtxMenu: React.FC<BkmCtxMenuProps> = ({
   // Open node location
   addOption(CommonCtxMenuOptions.OPEN_LOCATION, [
     setCurrNode(node.parentId),
-    page({ page: PAGES.bkmFolder, folder: node.parentId })
+    page({ page: Pages.BKM_FOLDER, folder: node.parentId })
   ]);
 
   // show properties

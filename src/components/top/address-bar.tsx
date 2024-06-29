@@ -7,7 +7,7 @@ import {
   SRH_REQ_DELAY,
   TIPS
 } from '@proj-const';
-import { BookmarkTreeDataNode, PAGES } from '@proj-types';
+import { BookmarkTreeDataNode, Pages } from '@proj-types';
 import {
   setCurrNode,
   page,
@@ -63,7 +63,7 @@ const AddressBarElement: React.FC<
   const onClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(setCurrNode(id));
-    dispatch(page({ page: PAGES.bkmFolder, folder: id }));
+    dispatch(page({ page: Pages.BKM_FOLDER, folder: id }));
     dispatch(deselectAll());
   };
 
@@ -79,7 +79,7 @@ const AddressBarElement: React.FC<
 };
 
 const stateSelectorAddressBar = new ReduxSelectorForArrOfElements(
-  (state: RootStateType): [BookmarkTreeDataNode, BookmarkTreeDataNode[], PAGES] => [
+  (state: RootStateType): [BookmarkTreeDataNode, BookmarkTreeDataNode[], Pages] => [
     state.bookmarks.currNode,
     state.bookmarks.currNodeParentChain,
     state.transient.currPage
@@ -92,7 +92,7 @@ export const AddressBar: React.FC<any> = () => {
   const [query, setQuery] = useState('');
   const [srhMode, setSrhMode] = useState(false);
   const home = (addrInfo = [...addrInfo]).pop();
-  const isBkmPage = currPage === PAGES.bkmFolder;
+  const isBkmPage = currPage === Pages.BKM_FOLDER;
 
   !isBkmPage && srhMode && setSrhMode(false);
 

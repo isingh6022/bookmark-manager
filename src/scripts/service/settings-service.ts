@@ -1,11 +1,4 @@
-import {
-  BKM_DISPLAY_ORDER,
-  DragstartInfo,
-  DropInfo,
-  FLOW,
-  RetainedState,
-  Theme
-} from '@proj-types';
+import { BkmDisplayOrder, DragstartInfo, DropInfo, Flow, RetainedState, Theme } from '@proj-types';
 import { BaseSingleton, Util } from '../utilities/utilities.js';
 import { BaseService } from './base-service.js';
 import {
@@ -78,11 +71,11 @@ export class SettingsService extends BaseService {
     ];
   }
 
-  setFlowDirection(state: RetainedState, val: FLOW) {
+  setFlowDirection(state: RetainedState, val: Flow) {
     this._cache.flowDirection = val;
     this.updateStateObject(state);
   }
-  setBkmDisplayOrder(state: RetainedState, val: BKM_DISPLAY_ORDER) {
+  setBkmDisplayOrder(state: RetainedState, val: BkmDisplayOrder) {
     this._cache.bkmDisplayOrder = val;
     this.updateStateObject(state);
   }

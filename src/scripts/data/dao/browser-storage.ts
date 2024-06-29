@@ -3,7 +3,7 @@ import {
   DEFAULT_BKM_PG_FOL_COL_COUNT,
   CONSECUTIVE_STORAGE_UPDATE_DELAY
 } from '@proj-const';
-import { FLOW, STORAGE_DATA_OBJECT, Storage } from '@proj-types';
+import { Flow, STORAGE_DATA_OBJECT, Storage } from '@proj-types';
 import { BROWSER } from '../browser/browser-api.js';
 import { FailedToLoadStorageData, BaseSingleton } from '../../utilities/utilities.js';
 
@@ -13,7 +13,7 @@ const DEFAULT_STORAGE_VALS: STORAGE_DATA_OBJECT = {
   homePin: '',
   groupBkmFol: false,
   showFolBkmIcons: false,
-  flowDirection: FLOW.Col,
+  flowDirection: Flow.COL,
   notice: '',
   colCount: DEFAULT_BKM_PG_FOL_COL_COUNT,
   themes: [],

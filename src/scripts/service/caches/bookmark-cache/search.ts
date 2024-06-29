@@ -10,18 +10,18 @@ import {
 } from '@proj-types';
 
 // Following weights are also used as identifiers also.
-enum MATCH_TYPE {
+enum MatchType {
   // FULL MATCHES
   // fulLtag = 0, // Not using tags currently
-  fulLurl = 16,
-  fulLnam = 5, // for bookmark link titles.
-  fulLfol = 7, // for folder names
+  FULL_URL = 16,
+  FULL_NAM = 5, // for bookmark link titles.
+  FULL_FOL = 7, // for folder names
 
   // PARTIAL MATCHES
   // parTtag = 0, // Not using tags
-  parTfol = 3,
-  parTnam = 2,
-  parTurl = 1
+  PART_FOL = 3,
+  PART_NAM = 2,
+  PART_URL = 1
 }
 
 class NodeScore implements NodeScoreData {
@@ -43,17 +43,17 @@ class NodeScore implements NodeScoreData {
   }
 
   // prettier-ignore
-  incScoreCount(type: MATCH_TYPE, count=1) {
+  incScoreCount(type: MatchType, count=1) {
     switch(type){
       // case MATCH_TYPE.fulLtag: this.fulLtag+=count; break;
-      case MATCH_TYPE.fulLurl: this.fulLurl+=count; break;
-      case MATCH_TYPE.fulLnam: this.fulLnam+=count; break;
-      case MATCH_TYPE.fulLfol: this.fulLfol+=count; break;
+      case MatchType.FULL_URL: this.fulLurl+=count; break;
+      case MatchType.FULL_NAM: this.fulLnam+=count; break;
+      case MatchType.FULL_FOL: this.fulLfol+=count; break;
 
       // case MATCH_TYPE.parTtag: this.parTtag+=count; break;
-      case MATCH_TYPE.parTurl: this.parTurl+=count; break;
-      case MATCH_TYPE.parTnam: this.parTnam+=count; break;
-      case MATCH_TYPE.parTfol: this.parTfol+=count; break;
+      case MatchType.PART_URL: this.parTurl+=count; break;
+      case MatchType.PART_NAM: this.parTnam+=count; break;
+      case MatchType.PART_FOL: this.parTfol+=count; break;
     }
     this._totalScore = 0;
   }
@@ -63,13 +63,13 @@ class NodeScore implements NodeScoreData {
       this._totalScore ||
       (this._totalScore =
         // MATCH_TYPE.fulLtag * this.fulLtag +
-        MATCH_TYPE.fulLurl * this.fulLurl +
-        MATCH_TYPE.fulLnam * this.fulLnam +
-        MATCH_TYPE.fulLfol * this.fulLfol +
+        MatchType.FULL_URL * this.fulLurl +
+        MatchType.FULL_NAM * this.fulLnam +
+        MatchType.FULL_FOL * this.fulLfol +
         // MATCH_TYPE.parTtag * this.parTtag +
-        MATCH_TYPE.parTurl * this.parTurl +
-        MATCH_TYPE.parTnam * this.parTnam +
-        MATCH_TYPE.parTfol * this.parTfol)
+        MatchType.PART_URL * this.parTurl +
+        MatchType.PART_NAM * this.parTnam +
+        MatchType.PART_FOL * this.parTfol)
     );
   }
 }
@@ -171,30 +171,30 @@ export class SearchImpl implements Search {
     const urlPart = !urlComp && url.indexOf(query) !== -1,
       titlePart = !titleComp && title.indexOf(query) !== -1;
 
-    const addMatch = (type: MATCH_TYPE) => this._addMatch(node, type);
+    const addMatch = (type: MatchType) => this._addMatch(node, type);
 
-    urlComp && addMatch(MATCH_TYPE.fulLurl);
-    urlPart && addMatch(MATCH_TYPE.parTurl);
+    urlComp && addMatch(MatchType.FULL_URL);
+    urlPart && addMatch(MatchType.PART_URL);
 
-    titleComp && node.type === NodeType.FOL && addMatch(MATCH_TYPE.fulLfol);
-    titleComp && node.type === NodeType.BKM && addMatch(MATCH_TYPE.fulLnam);
+    titleComp && node.type === NodeType.FOL && addMatch(MatchType.FULL_FOL);
+    titleComp && node.type === NodeType.BKM && addMatch(MatchType.FULL_NAM);
 
-    titlePart && node.type === NodeType.FOL && addMatch(MATCH_TYPE.parTfol);
-    titlePart && node.type === NodeType.BKM && addMatch(MATCH_TYPE.parTnam);
+    titlePart && node.type === NodeType.FOL && addMatch(MatchType.PART_FOL);
+    titlePart && node.type === NodeType.BKM && addMatch(MatchType.PART_NAM);
   }
 
-  private _addMatch(node: BookmarkTreeNode, matchType: MATCH_TYPE) {
+  private _addMatch(node: BookmarkTreeNode, matchType: MatchType) {
     // prettier-ignore
     switch(matchType){
       // case MATCH_TYPE.fulLtag: this.match.complete.tag.add(node); break;
-      case MATCH_TYPE.fulLurl: this._match.complete.url.add(node); break;
-      case MATCH_TYPE.fulLnam: this._match.complete.nam.add(node); break;
-      case MATCH_TYPE.fulLfol: this._match.complete.fol.add(node); break;
+      case MatchType.FULL_URL: this._match.complete.url.add(node); break;
+      case MatchType.FULL_NAM: this._match.complete.nam.add(node); break;
+      case MatchType.FULL_FOL: this._match.complete.fol.add(node); break;
 
       // case MATCH_TYPE.parTtag: this.match.partial.tag.add(node); break;
-      case MATCH_TYPE.parTurl: this._match.partial.url.add(node); break;
-      case MATCH_TYPE.parTnam: this._match.partial.nam.add(node); break;
-      case MATCH_TYPE.parTfol: this._match.partial.fol.add(node); break;
+      case MatchType.PART_URL: this._match.partial.url.add(node); break;
+      case MatchType.PART_NAM: this._match.partial.nam.add(node); break;
+      case MatchType.PART_FOL: this._match.partial.fol.add(node); break;
 
       default:
         throw new InvalidArgumentError(SearchImpl.name, '_addMatch', 'matchType', matchType);
@@ -213,7 +213,7 @@ export class SearchImpl implements Search {
 
   private _getNodesWithScores(): [string, NodeScore][] {
     const allNodes = new Map<string, NodeScore>();
-    const addMatch = (node: BookmarkTreeNode, count: number, type: MATCH_TYPE) => {
+    const addMatch = (node: BookmarkTreeNode, count: number, type: MatchType) => {
       let score = allNodes.get(node.id);
       if (!score) {
         score = new NodeScore(node);
@@ -225,13 +225,13 @@ export class SearchImpl implements Search {
     // prettier-ignore
     {let part = this._match.partial, full = this._match.complete;
     // for(let score of part.tag.getAll()) addMatch(...score, MATCH_TYPE.parTtag);
-    for(let score of part.url.getAll()) addMatch(...score, MATCH_TYPE.parTurl);
-    for(let score of part.nam.getAll()) addMatch(...score, MATCH_TYPE.parTnam);
-    for(let score of part.fol.getAll()) addMatch(...score, MATCH_TYPE.parTfol);
+    for(let score of part.url.getAll()) addMatch(...score, MatchType.PART_URL);
+    for(let score of part.nam.getAll()) addMatch(...score, MatchType.PART_NAM);
+    for(let score of part.fol.getAll()) addMatch(...score, MatchType.PART_FOL);
     // for(let score of full.tag.getAll()) addMatch(...score, MATCH_TYPE.fulLtag);
-    for(let score of full.url.getAll()) addMatch(...score, MATCH_TYPE.fulLurl);
-    for(let score of full.nam.getAll()) addMatch(...score, MATCH_TYPE.fulLnam);
-    for(let score of full.fol.getAll()) addMatch(...score, MATCH_TYPE.fulLfol);}
+    for(let score of full.url.getAll()) addMatch(...score, MatchType.FULL_URL);
+    for(let score of full.nam.getAll()) addMatch(...score, MatchType.FULL_NAM);
+    for(let score of full.fol.getAll()) addMatch(...score, MatchType.FULL_FOL);}
 
     return Array.from(allNodes);
   }

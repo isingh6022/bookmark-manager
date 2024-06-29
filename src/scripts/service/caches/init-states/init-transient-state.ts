@@ -1,9 +1,9 @@
-import { MODE, PAGES, Popup, TransientState } from '@proj-types';
+import { Mode, Pages, Popup, TransientState } from '@proj-types';
 
 export const initTransientState: TransientState = {
   visitedFolderIds: [],
-  currPage: PAGES.bkmFolder,
-  currMode: MODE.default,
+  currPage: Pages.BKM_FOLDER,
+  currMode: Mode.DEFAULT,
 
   dragDrop: {
     dragging: false,

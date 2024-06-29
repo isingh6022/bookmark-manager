@@ -20,7 +20,7 @@ import {
   DropInfo,
   DropZone,
   NodeType,
-  PAGES,
+  Pages,
   PinCtxMenuProps
 } from '@proj-types';
 import {
@@ -72,7 +72,7 @@ const PinnedFolderLink: React.FC<{
       )}
       id={Util.misc.getPinFolElId(id)}
       onClick={() => {
-        dispatch(page({ page: PAGES.bkmFolder, folder: id }));
+        dispatch(page({ page: Pages.BKM_FOLDER, folder: id }));
         dispatch(deselectAll());
         dispatch(setCurrNode(id));
         dispatch(recheckPins());
@@ -101,7 +101,7 @@ const stateSelectorFolderPins = new ReduxSelectorForArrOfElements(
     state.settings.pinnedFolders,
     state.settings.homeFolder,
     state.bookmarks.currNode.id,
-    state.transient.currPage === PAGES.bkmFolder
+    state.transient.currPage === Pages.BKM_FOLDER
   ]
 ).selector;
 export const FolderPins: React.FC<any> = () => {

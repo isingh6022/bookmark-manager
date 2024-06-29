@@ -1,9 +1,9 @@
 import { STORAGE_DATA_OBJECT } from './storage.js';
 import { BookmarkTreeNode, BrowserBkmNode } from '../data/types-data.js';
 
-enum BROWSER_TYPE {
-  Mock,
-  Chrome
+enum BrowserType {
+  MOCK,
+  CHROME
 }
 
 type BrowserRemoveInfo = chrome.bookmarks.BookmarkRemoveInfo;
@@ -68,4 +68,4 @@ interface BrowserAPIs {
   events: BrowserEventsAPI;
 }
 
-export { BrowserActionsAPI, BrowserEventsAPI, BrowserAPIs, BrowserEvent, BROWSER_TYPE };
+export { BrowserActionsAPI, BrowserEventsAPI, BrowserAPIs, BrowserEvent, BrowserType };

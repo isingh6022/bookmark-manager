@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
   SettingsPopup,
-  BKM_DISPLAY_ORDER,
-  FLOW,
+  BkmDisplayOrder,
+  Flow,
   Pin,
   FieldGroupInfo,
   RadioFieldInfo,
@@ -21,7 +21,7 @@ import {
 import { useState } from 'react';
 import { InputGroup } from '../util-components/input-group.js';
 
-type SettTypes = [FLOW, BKM_DISPLAY_ORDER, number, string | undefined, Pin[]];
+type SettTypes = [Flow, BkmDisplayOrder, number, string | undefined, Pin[]];
 const settingsPopupSelector = new ReduxSelectorForArrOfElements<SettTypes>(
   (state: RootStateType) => [
     state.settings.flowDirection,
@@ -38,8 +38,8 @@ export const SettingsPopupComponent: React.FC<SettingsPopup> = (popup) => {
 
   const dispatch = useDispatch<AppDispatchType>();
 
-  const onFlowDirSelect = (flow: FLOW) => dispatch(bkmNodeFlow(flow));
-  const onDisplayOrderChange = (order: BKM_DISPLAY_ORDER) => dispatch(bkmDispOrder(order));
+  const onFlowDirSelect = (flow: Flow) => dispatch(bkmNodeFlow(flow));
+  const onDisplayOrderChange = (order: BkmDisplayOrder) => dispatch(bkmDispOrder(order));
   const onColCountChange = (count: number) => dispatch(colCount(count));
   const onHomePinSelect = (pinKey: string) => dispatch(homePin(pinKey));
 
@@ -54,11 +54,11 @@ export const SettingsPopupComponent: React.FC<SettingsPopup> = (popup) => {
         options: [
           {
             optionLabel: 'Row (Do not use)',
-            value: FLOW.Row
+            value: Flow.ROW
           },
           {
             optionLabel: 'Column (Better)',
-            value: FLOW.Col
+            value: Flow.COL
           }
         ]
       }
@@ -75,11 +75,11 @@ export const SettingsPopupComponent: React.FC<SettingsPopup> = (popup) => {
         options: [
           {
             optionLabel: 'Do Group',
-            value: BKM_DISPLAY_ORDER.groupAndSort as any
+            value: BkmDisplayOrder.GROUP_AND_SORT as any
           },
           {
             optionLabel: 'Default order',
-            value: BKM_DISPLAY_ORDER.default
+            value: BkmDisplayOrder.DEFAULT
           }
         ]
       }
@@ -110,7 +110,7 @@ export const SettingsPopupComponent: React.FC<SettingsPopup> = (popup) => {
   const dispDirInpGr: FieldGroupProps = {
     title: 'Whether to fill the rows or columns first',
     groupFieldsInfo: dispDirInpGrInfo,
-    setInfo: (info: { flow: FLOW }) => {
+    setInfo: (info: { flow: Flow }) => {
       if (flowDirection !== info.flow) {
         onFlowDirSelect(info.flow!);
       }
@@ -120,7 +120,7 @@ export const SettingsPopupComponent: React.FC<SettingsPopup> = (popup) => {
   const groupingInpGr: FieldGroupProps = {
     title: 'Group folders and sort all',
     groupFieldsInfo: groupingInpGrInfo,
-    setInfo: (info: { bkmDisplayOrder: BKM_DISPLAY_ORDER }) => {
+    setInfo: (info: { bkmDisplayOrder: BkmDisplayOrder }) => {
       if (info.bkmDisplayOrder !== bkmDisplayOrder) {
         onDisplayOrderChange(info.bkmDisplayOrder);
       }
