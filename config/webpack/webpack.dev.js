@@ -1,3 +1,5 @@
+import webpack from 'webpack';
+
 const devConfig = {
   mode: 'development',
   devtool: 'source-map',
@@ -6,7 +8,13 @@ const devConfig = {
   },
   optimization: {
     runtimeChunk: 'single'
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      BUILD_MODE: '"development"'
+    })
+  ]
+
   // devServer: {
   //   proxy: {
   //     '/data': 'http://localhost:8001'

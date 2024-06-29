@@ -50,6 +50,7 @@ const baseConfig = {
   plugins: [
     new HTMLWebpackPlugin({
       template: path.resolve('src', 'index.html'),
+      scriptLoading: 'blocking',
       inject: 'body'
     })
   ]
