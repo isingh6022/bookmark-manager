@@ -2,6 +2,7 @@ import { BrowserBkmNode } from '@proj-types';
 import { NOT_SUPPORTED_FLAG } from '@proj-const';
 import { GEN_MOCK_DATA } from './mock-data-gen/mock-nodes.js';
 import { NodeGenerator } from './mock-data-gen/node-gen.js';
+import { PersistantStorageRequests } from './persistStorageRequests.js';
 
 const NO_SUPPORT_FLAG: any = NOT_SUPPORTED_FLAG;
 
@@ -16,34 +17,58 @@ class MockBookmarksEvents {
   private static _onChReorderHandler: Function = () => {};
   private static _onImportEndHandler: Function = () => {};
 
+  private static _timeoutRef: any;
+
+  private static _setHandler(
+    handler: Function,
+    type:
+      | '_onRemoveHandler'
+      | '_onMoveHandler'
+      | '_onEditHandler'
+      | '_onCreateHandler'
+      | '_onChReorderHandler'
+      | '_onImportEndHandler'
+  ): void {
+    this[type] = (...args: any[]) => {
+      handler(...args);
+      if (MockBookmarksEvents._timeoutRef) {
+        clearTimeout(MockBookmarksEvents._timeoutRef);
+      }
+      MockBookmarksEvents._timeoutRef = setTimeout(
+        () => PersistantStorageRequests.saveDataForDebug(),
+        100
+      );
+    };
+  }
+
   static readonly onRemoved = {
     addListener(handler: (id: string, removeInfo: chrome.bookmarks.BookmarkRemoveInfo) => void) {
-      MockBookmarksEvents._onRemoveHandler = handler;
+      MockBookmarksEvents._setHandler(handler, '_onRemoveHandler');
     }
   };
   static readonly onMoved = {
     addListener(handler: (id: string, moveInfo: chrome.bookmarks.BookmarkMoveInfo) => void) {
-      MockBookmarksEvents._onMoveHandler = handler;
+      MockBookmarksEvents._setHandler(handler, '_onMoveHandler');
     }
   };
   static readonly onChanged = {
     addListener(handler: (id: string, changeInfo: chrome.bookmarks.BookmarkChangeInfo) => void) {
-      MockBookmarksEvents._onEditHandler = handler;
+      MockBookmarksEvents._setHandler(handler, '_onEditHandler');
     }
   };
   static readonly onCreated = {
     addListener(handler: (id: string, bookmark: chrome.bookmarks.BookmarkTreeNode) => void) {
-      MockBookmarksEvents._onCreateHandler = handler;
+      MockBookmarksEvents._setHandler(handler, '_onCreateHandler');
     }
   };
   static readonly onChildrenReordered = {
     addListener(handler: (id: string, reorderInfo: chrome.bookmarks.BookmarkReorderInfo) => void) {
-      MockBookmarksEvents._onChReorderHandler = handler;
+      MockBookmarksEvents._setHandler(handler, '_onChReorderHandler');
     }
   };
   static readonly onImportEnded = {
     addListener(handler: () => void) {
-      MockBookmarksEvents._onImportEndHandler = handler;
+      MockBookmarksEvents._setHandler(handler, '_onImportEndHandler');
     }
   };
 
@@ -123,7 +148,7 @@ class MockBookmarks extends MockBookmarksEvents {
   static getTree(): Promise<BrowserBkmNode[]> {
     return new Promise((res) => {
       let t0 = performance.now();
-      GEN_MOCK_DATA([1000, 30]).then((mockData) => {
+      GEN_MOCK_DATA([210, 50]).then((mockData) => {
         console.log('Mock data: ', mockData, '\n in: ', (performance.now() - t0).toFixed(3), 'ms');
         res(mockData);
       });

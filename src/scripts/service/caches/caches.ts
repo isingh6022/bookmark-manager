@@ -13,13 +13,15 @@ export const TransientStateCacheReadonly = TransientCache.instance.readonly;
 export const SettingsCacheReadonly = SettCache.instance.readonly;
 export const IconsCacheReadonly = IcoCache.instance.readonly;
 
+var BKM_CACHE_DEBUG;
+declare global {
+  var BKM_CACHE_DEBUG: any; // for debugging only - else browser doesn't have access to caches.
+}
+
 // For testing with mock data.
-// setTimeout(
-//   () =>
-//     console.log(
-//       BookmarkCache,
-//       (BookmarkCache as any)._rootNode._childNodes._children,
-//       (BookmarkCache as any)._rootNode._childNodes._children._nodeArray[1].children
-//     ),
-//   600
-// );
+if (BUILD_MODE === 'development') {
+  // Used only while debugging by the mock-browser api.
+  setTimeout(() => {
+    window['BKM_CACHE_DEBUG'] = BookmarkCache;
+  }, 600);
+}

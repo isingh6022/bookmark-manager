@@ -1,5 +1,5 @@
 import { BookmarkTreeNode, BookmarkTreeDataNode } from '../../data/node.js';
-import { IconObj } from '../../data/icons.js';
+import { IconData, IconObj } from '../../data/icons.js';
 import { BookmarkSliceState } from './bkm-slice-types.js';
 import { RetainedState } from './settings-slice-types.js';
 import { TransientState } from './transient-slice-types.js';
@@ -28,7 +28,9 @@ interface ReadonlySettingsCache extends ReadonlyCache<RetainedState> {}
 
 interface ReadonlyTransientCache extends ReadonlyCache<TransientState> {}
 
-interface ReadonlyIconCache extends ReadonlyCache<IconObj> {}
+interface ReadonlyIconCache extends ReadonlyCache<IconObj> {
+  getIco(id: string): IconData | undefined;
+}
 
 export type {
   ReadonlyCache,

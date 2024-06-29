@@ -10,6 +10,7 @@ import {
 
 import { BookmarkTreeNodeFactory } from './bkm-node-impl.js';
 import { BaseCache } from '../baseCache.js';
+import { IconsCacheReadonly } from '../caches.js';
 
 export abstract class EventManager extends BaseCache<BookmarkSliceState> {
   // @ts-ignore
@@ -57,9 +58,8 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
   protected _popExecutedEvent(): BkmEvent | undefined {
     return this._executedEventStack.pop();
   }
-  protected _pushExecutedEvent(event: BkmEvent, clearUndoStack = false): BkmEvent {
+  protected _pushExecutedEvent(event: BkmEvent, clearUndoStack = false): void {
     this._executedEventStack.push(event);
-    return event;
   }
 
   /**
@@ -68,40 +68,56 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
    */
   private _dispatchedEventsSet = new Set<string>();
   private _getBrowserEventSignature(event: BkmEvent): string {
+    let signature: string;
+
     switch (event.type) {
       case BkmEventType.RMV: {
         let rmv = (<RemovedEvent>event).payload;
-        return `${event.type}-${rmv.node.id}`;
+        signature = `${event.type}-${rmv.node.id}`;
+        break;
       }
       case BkmEventType.MOV: {
         let mov = (<MovedEvent>event).payload;
-        return `${event.type}-${mov.movedNodeId}-${mov.parentId}-${mov.index}-${mov.oldParentId}-${mov.oldIndex}`;
+        signature = `${event.type}-${mov.movedNodeId}-${mov.parentId}-${mov.index}-${mov.oldParentId}-${mov.oldIndex}`;
+        break;
       }
       case BkmEventType.CHG: {
         let chg = (<ChangedEvent>event).payload,
-          node = this.getNode(chg.changedNodeId);
+          node = this.getNode(chg.changedNodeId),
+          iconData = node && IconsCacheReadonly.getIco(node.id),
+          changeTitle = chg.title;
 
-        return node
-          ? `${event.type}-${chg.changedNodeId}-${chg.title || node.title}-${
-              chg.url || node.url || ''
-            }`
+        if (!changeTitle && iconData) {
+          changeTitle = iconData.title;
+        }
+
+        signature = node
+          ? `${event.type}-${chg.changedNodeId}-${changeTitle}-${chg.url || node.url || ''}`
           : '';
+        break;
       }
       case BkmEventType.ADD: {
         let add = (<CreatedEvent>event).payload;
-        return `${event.type}-${add.parentId}-${add.title || ''}-${add.url || ''}-${add.index}`;
+        signature = `${event.type}-${add.parentId}-${add.title || ''}-${add.url || ''}-${
+          add.index
+        }`;
+        break;
       }
       case BkmEventType.ORD: {
         let ord = (<ChReordered>event).payload;
-        return `${event.type}-${ord.targetParentNodeId}`;
+        signature = `${event.type}-${ord.targetParentNodeId}`;
+        break;
       }
       case BkmEventType.IMP: {
-        return `${event.type}-`;
+        signature = `${event.type}-`;
+        break;
       }
       default: {
-        return '';
+        signature = '';
       }
     }
+
+    return signature;
   }
 
   /**
@@ -114,10 +130,10 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
    * @param updateFromBrowser Whether the update was sent from the browser.
    */
   executeEvent(event: BkmEvent, executeOptimistically = true, updateFromBrowser = false): void {
-    if (executeOptimistically) {
-      let eventExecuted = false,
-        eventClone = this._cloneEvent(event);
+    let eventExecuted = false,
+      eventClone = this._cloneEvent(event); // May be altered during execution.
 
+    if (executeOptimistically) {
       switch (eventClone.type) {
         case BkmEventType.RMV: {
           let rmvEvent = <RemovedEvent>eventClone;
@@ -145,23 +161,24 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
           break;
         }
       }
-
-      if (eventExecuted) {
-        this._afterBrowserEvent(this._pushExecutedEvent(this._cloneEvent(event)));
-      }
     }
 
-    if (!updateFromBrowser) {
+    if (eventExecuted) {
+      this._pushExecutedEvent(this._cloneEvent(event));
+      this._afterEvent(this._cloneEvent(event));
+    }
+
+    if (updateFromBrowser) {
+      this._onBrowserUpdate(); // Just refreshes the view.
+    } else if (eventExecuted || !executeOptimistically) {
       this._dispatchBrowserEvent(event);
-      executeOptimistically && this._dispatchedEventsSet.add(this._getBrowserEventSignature(event));
-    } else {
-      this._onBrowserUpdate();
+      this._dispatchedEventsSet.add(this._getBrowserEventSignature(event));
     }
   }
   private _cloneEvent(event: BkmEvent): BkmEvent {
     return { type: event.type, payload: { ...(<any>event.payload || null) } };
   }
-  protected abstract _afterBrowserEvent(event: BkmEvent): void;
+  protected abstract _afterEvent(event: BkmEvent): void;
   protected abstract _dispatchBrowserEvent(event: BkmEvent): void;
 
   /**
@@ -230,6 +247,13 @@ export abstract class EventManager extends BaseCache<BookmarkSliceState> {
     let node = this.getNode(event.payload.changedNodeId);
     if (node) {
       event.payload.oldInfo = { title: node.title, url: node.url };
+      if (
+        (node.title === event.payload.title || !event.payload.hasOwnProperty('title')) &&
+        (node.url === event.payload.url || !event.payload.hasOwnProperty('url'))
+      ) {
+        return false;
+      }
+
       node && node.edit({ title: event.payload.title, url: event.payload.url });
       return true;
     }

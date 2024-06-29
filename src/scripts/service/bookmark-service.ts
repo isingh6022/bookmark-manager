@@ -117,11 +117,11 @@ export class BookmarkService extends BaseService {
   }
   ico(oldState: BookmarkSliceState, payload: string): void {
     let node = BookmarkCache.getNode(payload);
-    if (node) {
+    if (node && node.title) {
       let title = node.title || '',
         payload: ChangedEvent['payload'] = { changedNodeId: node.id, title: '' };
 
-      IconsCache.addIco(node.id, title);
+      IconsCache.addIco(node.id, title); // Done before the edit event is executed in cache.
       node.isIcon = true;
 
       this._cache.executeEvent({ type: BkmEventType.CHG, payload }, false, false);

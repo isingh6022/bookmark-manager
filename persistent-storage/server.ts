@@ -63,14 +63,24 @@ app.post('/save', (req: Request, res: Response) =>
   saveData(req.body) ? res.sendStatus(200) : res.sendStatus(400)
 );
 
+let currData = JSON.parse(readFileSync(FILE_PATH_BKM, { encoding: 'utf-8' }));
+let timeoutRef: any;
 app.post('/load_bookmarks', (req: Request, res: Response) => {
-  res.json(JSON.parse(readFileSync(FILE_PATH_BKM, { encoding: 'utf-8' })));
+  res.json(currData);
 });
 app.post('/save_bookmarks', (req: Request, res: Response) => {
   if (req.body) {
-    writeFileSync(FILE_PATH_BKM, JSON.stringify(req.body), { encoding: 'utf-8' });
+    currData = req.body;
+    if (timeoutRef) {
+      clearTimeout(timeoutRef);
+    }
+    timeoutRef = setTimeout(() => {
+      writeFileSync(FILE_PATH_BKM, JSON.stringify(req.body), { encoding: 'utf-8' });
+      console.log('Updated bookmarks data...');
+    }, 200);
     res.sendStatus(200);
   } else {
+    console.log('No request body in request to save bookmarks...');
     res.sendStatus(400);
   }
 });

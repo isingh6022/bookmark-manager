@@ -1,4 +1,4 @@
-import { BrowserBkmNode } from '@proj-types';
+import { BookmarkTreeDataNode, BrowserBkmNode } from '@proj-types';
 
 export class PersistantStorageRequests {
   /**
@@ -45,6 +45,25 @@ export class PersistantStorageRequests {
     })
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
+  }
+  static saveDataForDebug(): void {
+    const countNodes = (node: BookmarkTreeDataNode): number => {
+      let stack: BookmarkTreeDataNode[] = [node],
+        count = 0;
+
+      while (stack.length) {
+        let currNode = stack.pop()!;
+        count++;
+
+        currNode.children?.length && stack.push(...currNode.children);
+      }
+
+      return count;
+    };
+    const data = BKM_CACHE_DEBUG.getRootNode().dataTree.children,
+      sizes = data.map((childNode: any) => countNodes(childNode));
+
+    this.saveBookmarkData({ data, sizes });
   }
 
   static clearData(): Promise<void> {

@@ -140,7 +140,7 @@ export class BookmarkCache extends EventManager {
     return this.getRootNode().children.map((node) => node.dataTree);
   }
 
-  protected _afterBrowserEvent(event: BkmEvent): void {
+  protected _afterEvent(event: BkmEvent): void {
     this.deSelectAll();
   }
   protected _dispatchBrowserEvent(event: BkmEvent) {
