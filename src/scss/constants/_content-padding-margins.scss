@@ -1,7 +1,7 @@
 // TOP BAR
 $top-bar-btn-size: $layout-size-1;
 $top-bar-btn-size2: $layout-size-0;
-$addr-bar-btn-padding: 0.1rem 0.5rem 0 0.3rem;
+$addr-bar-btn-padding: 0 0.5rem 0 0.3rem;
 $_pg-btn-icon-container-pd: 0.3rem;
 // $pg-btn-icon-container-pd: 0 ($top-menu-height - $top-bar-btn-size - $_pg-btn-icon-container-pd) 0
 //   $_pg-btn-icon-container-pd;
@@ -11,7 +11,7 @@ $add-bar-container-pd: 0 0.5rem 0 0.5rem;
 // CONTENT
 $default-content-padding: 0.6rem 0 7rem 0;
 
-$node-height: 1.6rem;
+$node-height: 1.8rem;
 $node-padding-lt: 0.3rem;
 $node-padding-rt: 0.1rem;
 
@@ -20,8 +20,8 @@ $subfolder-content-padding: 0 0 0 0.7rem;
 $node-icon-mg: 0 0.3rem;
 
 // Left side bar
-$pin-height: 1.8rem;
-$pin-folder-padding: 0 0.2rem 0 0.4rem;
+$pin-height: 2rem;
+$pin-folder-padding: 0.4rem 0.2rem 0 0.4rem;
 
 // Context Menu
 $context-menu-item-padding: 0.3rem 0.7rem;
