@@ -2900,6 +2900,10 @@ const ATTRIBUTION_AND_LICENSE = `
 `;
 
 function printAttributionsAndLicense() {
+  console.log(`I downloaded fonts from google
+    (https://fonts.google.com/noto/specimen/Noto+Sans,
+    https://fonts.google.com/specimen/Playwrite+IT+Moderna)
+    For the rest: -`);
   console.log(ATTRIBUTION_AND_LICENSE);
 }
 

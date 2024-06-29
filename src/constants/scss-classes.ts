@@ -52,6 +52,7 @@ enum MinorElementsRefCSS {
   NOD_CH_EVN = 'node-ch-col-even',
   NOD_BKM = 'bookmark',
   NOD_FOL = 'folder',
+  NOD_EDT = 'editing-node',
   NOD_SEL = 'node-selected',
   FOL_COLLAPSED = 'folder-collapsed',
   FOL_EXPANDED = 'folder-expanded',

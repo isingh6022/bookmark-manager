@@ -55,7 +55,8 @@ export class NodeModel {
           ? MinorElementsRefCSS.FOL_EXPANDED
           : MinorElementsRefCSS.FOL_COLLAPSED
         : '',
-      this._node.selected ? MinorElementsRefCSS.NOD_SEL : ''
+      this._node.selected ? MinorElementsRefCSS.NOD_SEL : '',
+      this._state.editing ? MinorElementsRefCSS.NOD_EDT : ''
     );
   }
 
@@ -78,6 +79,10 @@ export class NodeModel {
         !this._state.expanded &&
         this._mode === Mode.EDIT &&
         this._dispatch(deselectAll(this._node.id));
+
+      if (this._state.editing) {
+        e?.preventDefault();
+      }
     }
   }
 

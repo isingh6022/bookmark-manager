@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "online / offline Bookmark Manager",
-  "version": "9.0.0",
+  "version": "9.0.1",
   "author": "",
   "description": "Bookmark Viewer/Editor: no uploads reqd.(offline), full tab view.",
   "offline_enabled": true,

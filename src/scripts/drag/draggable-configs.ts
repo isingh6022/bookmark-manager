@@ -30,9 +30,12 @@ export const bkmOrFolDraggableConfig: (
 ) => DraggableCallbacks = (onDragstart, dragEndCB) => ({
   callbackId: 'node-bkm-fol-draggable',
   getDragstartTarget: function (e: MouseEvent): HTMLElement | null {
-    return e.target instanceof HTMLElement && Util.dragDrop.getBkmPageContainerParent(e.target)
-      ? Util.dragDrop.getBookmarkElement(e.target) ?? Util.dragDrop.getFolderElement(e.target)
-      : null;
+    const node =
+      e.target instanceof HTMLElement && Util.dragDrop.getBkmPageContainerParent(e.target)
+        ? Util.dragDrop.getBookmarkElement(e.target) ?? Util.dragDrop.getFolderElement(e.target)
+        : null;
+
+    return node?.classList.contains(MinorElementsRefCSS.NOD_EDT) ? null : node;
   },
   onDragstart: function (e: MouseEvent, dragstartTarget: HTMLElement): void {
     onDragstart(dragstartTarget);

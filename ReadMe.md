@@ -21,22 +21,18 @@ Rest of the top level files and folders are self explanatory.
 
 You can run the application either by loading it into the browser or by starting the webpack server.
 
-#### Loading into the browser
+Firstly, the dependencies have to be installed. For that install node js and npm. Then open the project folder in terminal and run the command `npm install`.
+
+#### **Method I**: Loading into the browser
 
 To build the application and run in browser extension, simply run the command `npm run build`. Then load the output folder (build) in the `chrome://extensions` page. It will add the extension to browser.
 (If you need help, google how to load unpacked extension in browser for testing.)
 
 Now just open the extension using its icon.
 
-#### Starting webpack server.
+#### **Method II** (easier): Starting webpack server.
 
-This is preferable because you don't have to add extension in the browser.
-
-Open a terminal and run `npm start` command in it. This starts the webpack server.
-
-Now, open a second terminal and run `npm run start-server` in it. This starts an express server to save changes made in a file.
-
-> I just didn't want to use concurrently to convert this into a single command.
+Open a terminal and run the command `npm start`.
 
 Now just go to `localhost:8080` and you will see some randomly generated bookmarks there.
 
