@@ -1,0 +1,84 @@
+#top-bar-id {
+  align-items: stretch;
+
+  .address-bar-icon-container {
+    // NOTE: flex: 0 0 overwrites flex-basis in layout.
+    flex: 0 0;
+    font-size: $top-bar-btn-size;
+    cursor: pointer;
+
+    padding: $addr-bar-btn-padding;
+
+    & > div {
+      padding: $pg-btn-icon-container-pd;
+    }
+  }
+
+  #address-bar-id {
+    flex: 1 0 $address-bar-min-width;
+    padding: $add-bar-container-pd;
+    font-size: $font-size-1;
+    cursor: text;
+
+    div#address-bar-element-container-id {
+      display: flex;
+      flex-flow: row-reverse nowrap;
+      overflow: hidden;
+      align-items: center;
+      justify-content: flex-end;
+      flex-grow: 1;
+      padding: 0.2rem;
+      border-radius: 0.2rem;
+
+      div.address-bar-element {
+        cursor: pointer;
+
+        span + span,
+        span.address-bar-text-container {
+          display: inline-block;
+          transform: translateY(0.06rem);
+        }
+      }
+    }
+
+    input {
+      flex: 1 1 0;
+      padding: 0.2rem 1rem;
+      border-radius: 0.2rem;
+      outline: 0;
+      // border: 0;
+    }
+
+    #address-bar-button-id {
+      cursor: pointer;
+      transform: translateX(-1.3rem);
+      max-width: 0;
+    }
+
+    #address-bar-home-id {
+      font-size: $layout-size-1;
+    }
+
+    svg {
+      font-size: 1rem;
+    }
+  }
+  #state-buttons-id {
+    .animated {
+      transition: transform $duration-1-2;
+    }
+  }
+  #action-buttons-id {
+    .edit-btn-editing {
+      font-size: $top-bar-btn-size2;
+      svg {
+        width: $top-bar-btn-size;
+      }
+    }
+  }
+
+  svg {
+    font-size: 1.2rem;
+    height: 100%;
+  }
+}

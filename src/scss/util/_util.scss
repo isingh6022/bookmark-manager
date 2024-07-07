@@ -1,0 +1,43 @@
+@import './reset';
+@import './temp';
+@import './common';
+
+// Flexbox
+.flex-row-center-nowrap {
+  display: flex;
+  flex-flow: row nowrap;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.flex-justify-start {
+  justify-content: flex-start;
+}
+.flex-justify-end {
+  justify-content: flex-end;
+}
+.flex-justify-center {
+  justify-content: center;
+}
+.flex-justify-between {
+  justify-content: space-between;
+}
+
+// Rotation
+.rotate-90-anti-cloc {
+  transform: rotate(-90deg);
+}
+.rotate-90-cloc {
+  transform: rotate(90deg);
+}
+
+input {
+  outline: 0;
+  border: 1px solid rgb(118, 118, 118);
+  height: $form-input-ht;
+}
+select {
+  outline: 0;
+  border: 1px solid rgb(118, 118, 118);
+  height: $form-input-ht;
+}

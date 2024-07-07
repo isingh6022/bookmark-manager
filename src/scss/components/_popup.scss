@@ -1,0 +1,40 @@
+.popup {
+  position: absolute;
+  transition: opacity 0.2s ease-in;
+
+  * {
+    background-color: white;
+  }
+
+  .popup-title {
+    display: flex;
+    justify-content: space-between;
+    // border: 1px solid black;
+    padding: $popup-heading-padding;
+    font-size: $popup-heading-font-size;
+
+    span:first-child {
+      flex: 1 1 0;
+    }
+    span:last-child {
+      flex: 0 0 auto;
+      cursor: pointer;
+    }
+
+    border-top-left-radius: $popup-border-radius;
+    border-top-right-radius: $popup-border-radius;
+  }
+
+  .popup-contents {
+    padding: $popup-content-padding;
+    // border: 1px solid black;
+
+    border-bottom-left-radius: $popup-border-radius;
+    border-bottom-right-radius: $popup-border-radius;
+    overflow: auto;
+    max-height: 80vh;
+  }
+
+  border: 2px solid black;
+  border-radius: $popup-border-radius;
+}

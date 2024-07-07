@@ -1,0 +1,51 @@
+label.input-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+
+  &.input-container-justify-start {
+    justify-content: flex-start;
+  }
+
+  span {
+    text-align: right;
+  }
+
+  input,
+  select {
+    margin-left: $form-input-mg-lt;
+  }
+  &.input-container-justify-start {
+    justify-content: flex-start;
+  }
+  &.input-radio-buttons-container {
+    span {
+      text-align: left;
+      flex: 1 1 auto;
+    }
+  }
+
+  margin-bottom: 0.3rem;
+}
+
+div.input-container.input-radio-container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+  .input-radio-title {
+    padding: 0.3rem;
+    margin-bottom: 0.2rem;
+    // outline: 1px solid red;
+  }
+}
+
+div.form-elements-container {
+  display: flex;
+  flex-flow: row wrap;
+
+  .form-group-container {
+    flex: 1 0 100%;
+  }
+}

@@ -1,0 +1,51 @@
+html,
+body,
+.fullscreen-overlay {
+  padding: 0;
+  overflow: hidden;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  height: 100%;
+  width: 100%;
+}
+
+#top-bar-id {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $top-menu-height;
+}
+
+#left-sidebar-id,
+#middle-container-id,
+#right-sidebar-id {
+  $ht-below-top-bar: calc(100% - $top-menu-height);
+
+  position: absolute;
+  height: $ht-below-top-bar;
+  top: $top-menu-height;
+  overflow: auto;
+}
+
+#left-sidebar-id {
+  width: $side-margin1;
+  left: 0;
+}
+#middle-container-id {
+  margin-left: $side-margin1;
+  width: calc(100% - $side-margin1 - $side-margin2);
+}
+#right-sidebar-id {
+  width: $side-margin2;
+  right: 0;
+  overflow: hidden;
+}
+
+#context-menu {
+  position: fixed;
+  z-index: 100;
+}

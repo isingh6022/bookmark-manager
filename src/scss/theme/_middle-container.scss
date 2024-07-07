@@ -1,0 +1,42 @@
+#bkmFolder-page-container-id,
+#search-or-recent-page-container-id {
+  background-color: #044d71; // ${middleColors.background}
+
+  .node-ch-col {
+    &.node-ch-col-root {
+      background-color: green; // ${middleColors.rootFolChContainerBgColor}
+    }
+    border-right: 1px solid black; // ${middleColors.rootNodeContainerBorderColor}
+    &:last-child {
+      border-right: 0; // Hides borders of subfolder children containers as well.
+    }
+    span.folder,
+    div.folder > span {
+      color: blue; // ${middleColors.folder.textColor}
+      background-color: #f7e96f; // ${middleColors.folder.background}
+      svg {
+        color: red; // ${middleColors.folder.iconColor}
+      }
+      border-bottom: 1px solid blueviolet; // ${middleColors.folder.borderColor}
+      // border-left: 1px solid blueviolet;
+    }
+
+    div.folder > div.node-ch-col {
+      &.node-ch-col-odd {
+        background-color: rgb(219, 219, 219); // ${middleColors.oddSubFolChContainerBgColor}
+      }
+      &.node-ch-col-even {
+        background-color: white; // // ${middleColors.evenSubFolChContainerBgColor}
+      }
+    }
+
+    .bookmark {
+      color: red; // ${middleColors.bookmark.textColor}
+      background-color: #fff4d2; // ${middleColors.bookmark.background}
+      border-bottom: 1px solid blueviolet; // ${middleColors.bookmark.borderColor}
+      svg {
+        color: blueviolet; // ${middleColors.bookmark.iconColor}
+      }
+    }
+  }
+}

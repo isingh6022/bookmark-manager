@@ -1,0 +1,25 @@
+#context-menu {
+  display: flex;
+  flex-flow: column nowrap;
+  border-radius: 5px;
+  padding: $context-menu-padding;
+
+  div {
+    white-space: nowrap;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: $context-menu-item-height;
+    padding: $context-menu-item-padding;
+    font-size: 0.95rem;
+    cursor: pointer;
+
+    border-radius: 0.3rem;
+
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: rgb(221, 221, 221);
+    }
+  }
+}

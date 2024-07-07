@@ -1,0 +1,63 @@
+#top-bar-id {
+  background-color: #9ab8d9; // ${topBarColors.background}
+  border-bottom: 1px solid red; // ${topBarColors.borderBottom} ?
+
+  svg {
+    color: #131b68; // ${topBarColors.iconColor}
+  }
+
+  #address-bar-id {
+    #address-bar-element-container-id {
+      border: 1px solid green; // ${topBarColors.addressBar.borderColor} ?
+      background-color: #d7e4f1; // ${topBarColors.addressBar.background}
+
+      .address-bar-element {
+        .address-bar-text-container {
+          color: purple; // ${topBarColors.addressBar.textColor}
+        }
+        svg {
+          color: red; // ${topBarColors.addressBar.addressSeparatorColor}
+        }
+        #address-bar-home-button-container-id {
+          svg {
+            color: rgb(29, 212, 102); // ${topBarColors.addressBar.homeColor}
+          }
+        }
+      }
+    }
+    input {
+      border: 1px solid green; // ${topBarColors.addressBar.borderColor} ?
+      color: purple; // ${topBarColors.addressBar.textColor}
+    }
+
+    #address-bar-button-id {
+      svg {
+        color: magenta; // ${topBarColors.addressBar.searchColor}
+      }
+    }
+  }
+
+  // button groups
+  #page-buttons-id {
+    background-color: #9ab8d9; // ${topBarColors.pageButtons.background}
+    border: 1px solid red; // ${topBarColors.pageButtons.border} ?
+    svg {
+      color: #131b68; // ${topBarColors.pageButtons.iconColor}
+    }
+  }
+  #action-buttons-id {
+    background-color: #9ab8d9; // ${topBarColors.actionButtons.background}
+    border: 1px solid red; // ${topBarColors.actionButtons.border} ?
+    svg {
+      color: #131b68; // ${topBarColors.actionButtons.iconColor}
+    }
+  }
+  #state-buttons-id {
+    background-color: #9ab8d9; // ${topBarColors.stateButtons.background}
+    border: 1px solid red; // ${topBarColors.stateButtons.border} ?
+    svg {
+      color: #131b68; // ${topBarColors.stateButtons.iconColor}
+    }
+    border-left: 2px solid grey; // ${topBarColors.stateActnBtnSeparator} ?
+  }
+}

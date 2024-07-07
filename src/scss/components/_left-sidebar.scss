@@ -1,0 +1,64 @@
+#left-sidebar-id {
+  & > div {
+    height: 100%;
+    overflow: auto;
+  }
+  .pinned-folder-container {
+    display: flex;
+    flex-flow: column nowrap;
+
+    .pin-folders-tip {
+      padding: 0.2rem 0 0 0.2rem;
+      font-style: italic;
+    }
+
+    .pinned-folder {
+      height: $pin-height;
+
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: $pin-folder-padding;
+      cursor: pointer;
+
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        height: $pin-height - 0.5rem;
+      }
+      span:first-child {
+        pointer-events: none;
+      }
+
+      .remove-pin-button {
+        flex-shrink: 0;
+        display: none;
+        height: 1rem;
+      }
+      &:hover .remove-pin-button {
+        display: inline;
+      }
+
+      &.pinned-folder-selected {
+        // border-left: 5px solid grey;
+        // border-right: 5px solid grey;
+      }
+
+      &.home-pinned-folder {
+        border-left: 5px solid black;
+      }
+
+      &.dragover-middle {
+        border: $dragover-middle-border;
+      }
+      &.dragover-top {
+        border-top: $dragover-top-border-top;
+      }
+      &.dragover-bottom {
+        border-bottom: $dragover-bottom-border-bottom;
+      }
+    }
+  }
+}

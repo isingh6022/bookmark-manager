@@ -1,0 +1,52 @@
+// TOP BAR
+$top-bar-btn-size: $layout-size-1;
+$top-bar-btn-size2: $layout-size-0;
+$addr-bar-btn-padding: 0.1rem 0.5rem 0 0.3rem;
+$_pg-btn-icon-container-pd: 0.3rem;
+// $pg-btn-icon-container-pd: 0 ($top-menu-height - $top-bar-btn-size - $_pg-btn-icon-container-pd) 0
+//   $_pg-btn-icon-container-pd;
+$pg-btn-icon-container-pd: 0 0.5rem 0 $_pg-btn-icon-container-pd;
+$add-bar-container-pd: 0 0.5rem 0 0.5rem;
+
+// CONTENT
+$default-content-padding: 0.6rem 0 7rem 0;
+
+$node-height: 1.4rem;
+$node-padding-lt: 0.3rem;
+$node-padding-rt: 0.1rem;
+
+$folder-close-size: 1.2rem;
+$subfolder-content-padding: 0 0 0 0.7rem;
+$node-icon-mg: 0 0.3rem;
+
+// Left side bar
+$pin-height: 1.8rem;
+$pin-folder-padding: 0 0.2rem 0 0.4rem;
+
+// Context Menu
+$context-menu-item-padding: 0.3rem 0.7rem;
+$context-menu-item-height: 1.65rem;
+$context-menu-padding: 0.2rem 0.5rem; //  0.1rem 0.5rem;
+
+// Scrollbar
+$scroll-bar-width: 0.5rem;
+$scroll-bar-height: 0.1rem; // horizontal
+$scroll-bar-border-radius: calc($scroll-bar-width / 2);
+
+// Popup
+$popup-heading-padding: 0.3rem;
+$popup-content-padding: 0.6rem;
+$popup-heading-font-size: 1.1rem;
+
+$popup-border-radius: 0.5rem;
+
+// Form
+$form-input-mg-lt: 0.4rem;
+$form-input-ht: 1.3rem;
+
+// Dragover borders
+$dragover-middle-border: 5px solid black;
+$dragover-top-border-top: 5px solid black;
+$dragover-bottom-border-bottom: 5px solid black;
+$dragover-left-border-left: 10px solid black;
+$dragover-right-border-right: 10px solid black;

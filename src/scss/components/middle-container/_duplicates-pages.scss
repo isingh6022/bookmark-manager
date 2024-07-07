@@ -1,0 +1,52 @@
+#duplicates-page-container-id {
+  #duplicates-controls {
+    padding: 1rem;
+    background-color: white;
+
+    span {
+      margin: 0 0.2rem;
+      padding: 0.2rem 0.5rem;
+      border: 1px solid black;
+      border-radius: 0.2rem;
+
+      cursor: pointer;
+    }
+
+    span#delete-duplicates {
+      margin-left: 2rem;
+    }
+
+    border-bottom: 2px solid black;
+  }
+
+  #node-groups {
+    padding: 1rem;
+
+    .duplicates-group {
+      margin: 1rem;
+      padding: 0.5rem;
+
+      border: 1px solid rgb(143, 143, 143);
+      border-radius: 0.2rem;
+
+      background-color: white;
+
+      .duplicate-node {
+        display: flex;
+        flex-flow: row;
+        align-items: center;
+
+        input {
+          transform: translateY(0.1rem);
+        }
+
+        a {
+          margin: 0 0 0 1rem;
+          svg {
+            margin: 0 0.5rem 0 0;
+          }
+        }
+      }
+    }
+  }
+}

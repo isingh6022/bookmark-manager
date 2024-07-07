@@ -1,0 +1,12 @@
+#right-sidebar-id {
+  border-left: 1px solid red; // ${rightBarColors.borderLeft} ?
+
+  #right-info-container-id {
+    background-color: #d7e4f1; // ${rightBarColors.background}
+    color: #131b68; // ${rightBarColors.textColor}
+
+    svg {
+      color: #131b68; // ${rightBarColors.textColor}
+    }
+  }
+}

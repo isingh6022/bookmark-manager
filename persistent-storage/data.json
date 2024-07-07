@@ -1,0 +1,8 @@
+{
+  "hello": "world",
+  "pins": ["673", "666", "664"],
+  "colCount": 4,
+  "homePin": "666",
+  "groupBkmFol": false,
+  "flowDirection": "col"
+}

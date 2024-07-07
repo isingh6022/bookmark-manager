@@ -1,0 +1,32 @@
+#properties-popup-container-id {
+  .popup-contents div {
+    h1 {
+      svg {
+        margin-right: 0.3rem;
+      }
+      padding: 0.3rem 0;
+    }
+
+    table {
+      margin: 0.5rem 0.2rem 1rem 0.2rem;
+      //   border: 1px solid black;
+      tr {
+        height: 1.5rem;
+
+        td:first-child {
+          font-weight: bold;
+        }
+        td:last-child:before {
+          content: ': ';
+          padding-left: 0.1rem;
+        }
+      }
+    }
+
+    button {
+      border: 1px solid black;
+      padding: 0.2rem 0.3rem;
+      border-radius: 0.3rem;
+    }
+  }
+}

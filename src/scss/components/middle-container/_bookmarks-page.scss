@@ -1,0 +1,115 @@
+#bkmFolder-page-container-id,
+#search-or-recent-page-container-id {
+  padding: $default-content-padding;
+  padding-top: 0rem;
+
+  .node-ch-col-root {
+    padding-top: 0.6rem;
+  }
+
+  display: flex;
+  flex-flow: row nowrap;
+
+  .node-ch-col {
+    flex: 1 0 0;
+    min-width: 0;
+
+    display: flex;
+    flex-flow: column nowrap;
+
+    .folder,
+    .bookmark {
+      opacity: 1;
+      transition:
+        opacity $duration-1 $curve-quick-initially,
+        border $duration-1;
+
+      // Selection
+      &.node-selected {
+        background-color: #a5f4ff;
+      }
+    }
+
+    & > span {
+      cursor: pointer;
+    }
+
+    span.folder,
+    .folder span,
+    .bookmark {
+      cursor: pointer;
+      display: flex;
+      flex-flow: row nowrap;
+      white-space: nowrap;
+      align-items: center;
+      justify-content: flex-start;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      height: $node-height;
+      flex: 0 0 $node-height;
+
+      svg {
+        flex: 0 0 auto;
+        margin: $node-icon-mg;
+      }
+    }
+
+    .folder {
+      display: flex;
+      flex-flow: column nowrap;
+
+      .node-ch-col {
+        padding: $subfolder-content-padding;
+        overflow: visible;
+        transition: height $duration-1 ease-in-out;
+      }
+
+      &.folder-collapsed > .node-ch-col {
+        .folder,
+        .bookmark {
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  // Drag and drop
+
+  // TO DO: Not working.
+  // .dragging {
+  //   background-color: #c496c4 !important;
+  // }
+  .node-ch-col .folder.dragover.dragover-middle {
+    border: $dragover-middle-border;
+  }
+
+  .node-ch-col .folder,
+  .node-ch-col .bookmark {
+    &.dragover-top {
+      border-top: $dragover-top-border-top;
+    }
+    &.dragover-bottom {
+      border-bottom: $dragover-bottom-border-bottom;
+    }
+  }
+
+  .node-ch-col.node-ch-col-row-flow {
+    .folder,
+    .bookmark {
+      &.dragover-top {
+        border-top: 0;
+      }
+      &.dragover-bottom {
+        border-bottom: 1px solid black;
+      }
+      &.dragover-left {
+        border-left: $dragover-left-border-left;
+      }
+      &.dragover-right {
+        border-right: $dragover-right-border-right;
+      }
+    }
+  }
+}

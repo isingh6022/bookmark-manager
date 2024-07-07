@@ -1,0 +1,41 @@
+#left-sidebar-id {
+  & > div {
+    background-color: #9ab8d9; // ${leftBarColors.background}
+    border-right: 1px solid red; // ${leftBarColors.borderRight} // ?
+  }
+  .pinned-folder-container {
+    .pinned-folder {
+      background-color: #d7e4f1; // ${leftBarColors.pinnedFolders.background}
+      * {
+        color: #131b68; // ${leftBarColors.pinnedFolders.textColor}
+      }
+
+      .pinned-folder-selected {
+        background-color: #d7e4f1; // ${leftBarColors.pinnedFolders.selected.background}
+        * {
+          color: #131b68; // ${leftBarColors.pinnedFolders.selected.textColor}
+        }
+      }
+      &.non-removable-pinned-folder {
+        background-color: #9ab8d9; // ${leftBarColors.fixedFolders.background}
+        * {
+          color: #131b68; // ${leftBarColors.fixedFolders.textColor}
+        }
+        .pinned-folder-selected {
+          background-color: #d7e4f1; // ${leftBarColors.fixedFolders.selected.background}
+          * {
+            color: #131b68; // ${leftBarColors.fixedFolders.selected.textColor}
+          }
+        }
+      }
+
+      span {
+      }
+
+      .remove-pin-button {
+      }
+      &:hover .remove-pin-button {
+      }
+    }
+  }
+}
